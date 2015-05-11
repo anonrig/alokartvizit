@@ -11,13 +11,14 @@
     text-align: center;
     height: 100px;
     margin-top: 10px;
+    cursor: pointer;
 }
 
 .sidebarMenu .menuItem:before {
-    content: 'icon';
+    content: '';
     display: inline-block;
-    height: 50px;
-    width: 100%;
+    height: 48px;
+    width: 84%;
 }
 
 .sidebarList {
@@ -26,4 +27,28 @@
     height: 100%;
     padding: 20px 30px;
     background-color: #3f4652;
+}
+
+.sidebarMenu .menuItem.template:before {
+    background-image: url('../images/menu/sablon.png');
+    margin-left: 5px;
+    margin-top: 30px;
+}
+
+.sidebarMenu .menuItem.text:before {
+    background-image: url('../images/menu/metin.png');
+    margin-left: 5px;
+    margin-top: 30px;
+}
+
+.sidebarMenu .menuItem.background:before {
+    background-image: url('../images/menu/arkaplan.png');
+    margin-left: 5px;
+    margin-top: 30px;
+}
+
+.sidebarMenu .menuItem.upload:before {
+    background-image: url('../images/menu/yuklenen.png');
+    margin-left: 5px;
+    margin-top: 30px;
 }
