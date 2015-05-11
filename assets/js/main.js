@@ -1,5 +1,6 @@
 var aloApp = angular.module('aloApp', [
-    'ngRoute'
+    'ngRoute',
+    'ngSanitize'
 ]);
 
 aloApp.config(['$routeProvider', function($routeProvider) {
