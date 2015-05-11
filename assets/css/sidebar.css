@@ -27,6 +27,7 @@
     height: 100%;
     padding: 20px 30px;
     background-color: #3f4652;
+    overflow-y: auto;
 }
 
 .sidebarMenu .menuItem.template:before {
@@ -51,4 +52,15 @@
     background-image: url('../images/menu/yuklenen.png');
     margin-left: 5px;
     margin-top: 30px;
+}
+
+.templateItem {
+    cursor: pointer;
+    margin-bottom: 20px;
+    display: inline-block;
+    float: left;
+}
+
+.templateItem > img {
+    width: 100%;
 }
