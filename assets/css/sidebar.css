@@ -1,0 +1,29 @@
+.sidebarMenu {
+    float: left;
+    width: 70px;
+    height: 100%;
+    background-color: rgb(38, 43, 50);
+}
+
+.sidebarMenu .menuItem {
+    color: white;
+    font-size: 11px;
+    text-align: center;
+    height: 100px;
+    margin-top: 10px;
+}
+
+.sidebarMenu .menuItem:before {
+    content: 'icon';
+    display: inline-block;
+    height: 50px;
+    width: 100%;
+}
+
+.sidebarList {
+    float: left;
+    width: 360px;
+    height: 100%;
+    padding: 20px 30px;
+    background-color: #3f4652;
+}

@@ -1,0 +1,23 @@
+<div class="sidebarMenu">
+    <div class="menuItem template" ng-click="activeView = 'template'"> ŞABLON </div>
+    <div class="menuItem text" ng-click="activeView = 'text'"> METİN </div>
+    <div class="menuItem background" ng-click="activeView = 'background'"> ARKAPLAN </div>
+    <div class="menuItem upload" ng-click="activeView = 'upload'"> YÜKLENEN </div>
+</div>
+
+<div class="sidebarList">
+    <div ng-switch on="activeView">
+        <div ng-switch-when="template">
+            ŞABLON
+        </div>
+        <div ng-switch-when="text">
+            METİN
+        </div>
+        <div ng-switch-when="background">
+            ARKAPLAN
+        </div>
+        <div ng-switch-when="upload">
+            YÜKLENEN
+        </div>
+    </div>
+</div>

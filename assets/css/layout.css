@@ -1,0 +1,20 @@
+body {
+    font-family: 'Roboto', sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.sidebar {
+    position: absolute;
+    height: 100%;
+}
+
+.editor {
+    width: calc(100% - 430px);
+    height: 100%;
+    position: absolute;
+    left: 430px;
+    min-width: 600px;
+}
