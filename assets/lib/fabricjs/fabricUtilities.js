@@ -6,7 +6,7 @@ angular.module('common.fabric.utilities', [])
 			parentClick: '&'
 		},
 		link: function(scope, element) {
-			element.mousedown(function() {
+			$(element).mousedown(function() {
 				$timeout(function() {
 					scope.parentClick();
 				});

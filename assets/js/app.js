@@ -1,7 +1,10 @@
 var aloApp = angular.module('aloApp', [
     'ngRoute',
     'ngSanitize',
-    'xml'
+    'xml',
+    'common.fabric',
+    'common.fabric.utilities',
+    'common.fabric.constants'
 ]);
 
 aloApp.config(['$routeProvider', '$httpProvider', function($routeProvider, $httpProvider) {

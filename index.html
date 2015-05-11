@@ -9,21 +9,34 @@
         <script src="./assets/lib/angular-sanitize.min.js"></script>
         <script src="./assets/lib/x2js.min.js"></script>
         <script src="./assets/lib/angular-xml.min.js"></script>
+        <script src="./assets/lib/jquery.min.js"></script>
+        
+        
 
         <!-- Styles  -->
         <link rel="stylesheet" type="text/css" href="./assets/css/reset.css">
         <link rel="stylesheet" type="text/css" href="./assets/css/layout.css">
         <link rel="stylesheet" type="text/css" href="./assets/css/sidebar.css">
+        <link rel="stylesheet" type="text/css" href="./assets/css/editor.css">
         <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,500,300&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
     </head>
     <body ng-controller="MainController">
 
         <!-- Views  -->
         <div class="sidebar" ng-include="'./assets/partials/sidebar.html'"></div>
-        <div class="editor" ng-include="'./assets/partials/editor.html'"></div>
+        <div class="editor" ng-controller="EditorController" ng-include="'./assets/partials/editor.html'"></div>
 
         <!-- Angular Scripts -->
         <script src="./assets/js/app.js"></script>
         <script src="./assets/js/controllers/MainController.js"></script>
+        <script src="./assets/js/controllers/EditorController.js"></script>
+        <script src="./assets/lib/fabric.min.js"></script>
+        <script src="./assets/lib/fabricjs/fabric.js"></script>
+        <script src="./assets/lib/fabricjs/fabricUtilities.js"></script>
+        <script src="./assets/lib/fabricjs/fabricDirtyStatus.js"></script>
+        <script src="./assets/lib/fabricjs/fabricDirective.js"></script>
+        <script src="./assets/lib/fabricjs/fabricConstants.js"></script>
+        <script src="./assets/lib/fabricjs/fabricCanvas.js"></script>
+        <script src="./assets/lib/fabricjs/fabricWindow.js"></script>
     </body>
 </html>
