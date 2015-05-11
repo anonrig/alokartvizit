@@ -1,11 +1,14 @@
 var aloApp = angular.module('aloApp', [
     'ngRoute',
-    'ngSanitize'
+    'ngSanitize',
+    'xml'
 ]);
 
-aloApp.config(['$routeProvider', function($routeProvider) {
+aloApp.config(['$routeProvider', '$httpProvider', function($routeProvider, $httpProvider) {
     $routeProvider.
         otherwise({
             redirectTo: '/'
         });
+
+    $httpProvider.interceptors.push('xmlHttpInterceptor');
 }]);
