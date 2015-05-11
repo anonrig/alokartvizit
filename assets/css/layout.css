@@ -17,4 +17,5 @@ body {
     position: absolute;
     left: 430px;
     min-width: 600px;
+    background: radial-gradient(hsl(0, 100%, 100%) 0%, hsla(0, 0%, 0%, 0.1) 100%) fixed;
 }
