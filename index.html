@@ -1,16 +1,27 @@
 <!doctype html>
 <html ng-app="aloApp">
     <head>
-        <title>Alokartvizit</title>
+        <title> Alokartvizit </title>
+
+        <!-- Scripts  -->
         <script src="./assets/lib/angular.min.js"></script>
         <script src="./assets/lib/angular-route.min.js"></script>
         <script src="./assets/lib/angular-sanitize.min.js"></script>
 
+        <!-- Styles  -->
         <link rel="stylesheet" type="text/css" href="./assets/css/reset.css">
+        <link rel="stylesheet" type="text/css" href="./assets/css/layout.css">
+        <link rel="stylesheet" type="text/css" href="./assets/css/sidebar.css">
+        <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,500,300&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
     </head>
     <body ng-controller="MainController">
 
-        <script src="./assets/js/main.js"></script>
+        <!-- Views  -->
+        <div class="sidebar" ng-include="'./assets/partials/sidebar.html'"></div>
+        <div class="editor" ng-include="'./assets/partials/editor.html'"></div>
+
+        <!-- Angular Scripts -->
+        <script src="./assets/js/app.js"></script>
         <script src="./assets/js/controllers/MainController.js"></script>
     </body>
 </html>
