@@ -5,7 +5,7 @@
     <div class="menuItem upload" ng-click="activeView = 'upload'"></div>
 </div>
 
-<div class="sidebarList">
+<div class="sidebarList" infinite-scroll="loadMore()">
     <div ng-switch on="activeView">
         <div ng-switch-when="template">
             <div class="templateItem" ng-repeat="record in templates.records" ng-click="getTemplate(record['UniqueID'])">

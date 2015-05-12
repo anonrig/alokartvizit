@@ -4,7 +4,8 @@ var aloApp = angular.module('aloApp', [
     'xml',
     'common.fabric',
     'common.fabric.utilities',
-    'common.fabric.constants'
+    'common.fabric.constants',
+    'infinite-scroll'
 ]);
 
 aloApp.config(['$routeProvider', '$httpProvider', function($routeProvider, $httpProvider) {
