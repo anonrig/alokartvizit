@@ -4,14 +4,6 @@ angular.module('aloApp').controller('EditorController', function($scope, $rootSc
     $scope.fabric = {};
     $scope.FabricConstants = FabricConstants;
 
-    $scope.getTemplate = function(id, callback) {
-        $http.get('assets/template.xml')
-            .success(function(response) {
-                $scope.template = response;
-                callback(response)
-            });
-    };
-
     //
     // Creating Canvas Objects
     // ================================================================
@@ -48,36 +40,26 @@ angular.module('aloApp').controller('EditorController', function($scope, $rootSc
     // Init
     // ================================================================
     $scope.init = function() {
-        $scope.getTemplate('id', function(data) {
-
-            $scope.fabric = new Fabric({
-                JSONExportProperties: FabricConstants.JSONExportProperties,
-                textDefaults: FabricConstants.textDefaults,
-                shapeDefaults: FabricConstants.shapeDefaults,
-                json: {}
-            });
-
-            $scope.fabric.setCanvasSize(910, 610);
-
-            $scope.fabric.getCanvas().setBackgroundImage('http://alokartvizit.com/designer/' + data['design']['page']['_bgurl'], $scope.fabric.getCanvas().renderAll.bind($scope.fabric.getCanvas()), {
-                backgroundImageOpacity: 1,
-                backgroundImageStretch: true,
-                width: $scope.fabric.canvasOriginalWidth,
-                height: $scope.fabric.canvasOriginalHeight
-            });
+        $scope.fabric = new Fabric({
+            JSONExportProperties: FabricConstants.JSONExportProperties,
+            textDefaults: FabricConstants.textDefaults,
+            shapeDefaults: FabricConstants.shapeDefaults,
+            json: {}
         });
+
+        $scope.fabric.setCanvasSize(910, 610);
     };
 
     $scope.$on('canvas:created', $scope.init);
+
     $rootScope.$on('templateChange', function(e, data) {
-        $scope.fabric.getCanvas().setBackgroundImage('http://alokartvizit.com/' + data['record']['ThumbImage'], $scope.fabric.getCanvas().renderAll.bind($scope.fabric.getCanvas()), {
+        $scope.fabric.getCanvas().setBackgroundImage('http://alokartvizit.com/designer/' + data['design']['page']['_bgurl'], $scope.fabric.getCanvas().renderAll.bind($scope.fabric.getCanvas()), {
             backgroundImageOpacity: 1,
             backgroundImageStretch: true,
             width: $scope.fabric.canvasOriginalWidth,
             height: $scope.fabric.canvasOriginalHeight
         });
     });
-
 
     Keypress.onSave(function() {
         $scope.updatePage();
