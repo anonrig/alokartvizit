@@ -737,6 +737,10 @@ angular.module('common.fabric', [
 			return data;
 		};
 
+		self.getCanvas = function() {
+			return FabricCanvas.getCanvas();
+		};
+
 		self.getCanvasBlob = function() {
 			var base64Data = self.getCanvasData();
 			var data = base64Data.replace('data:image/png;base64,', '');

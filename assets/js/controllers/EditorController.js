@@ -8,7 +8,6 @@ angular.module('aloApp').controller('EditorController', function($scope, $http, 
         $http.get('http://signa.dev/assets/template.xml')
             .success(function(response) {
                 $scope.template = response;
-                console.log(response);
             });
     };
 
@@ -48,6 +47,8 @@ angular.module('aloApp').controller('EditorController', function($scope, $http, 
     // Init
     // ================================================================
     $scope.init = function() {
+        $scope.getTemplate();
+
         $scope.fabric = new Fabric({
             JSONExportProperties: FabricConstants.JSONExportProperties,
             textDefaults: FabricConstants.textDefaults,
@@ -55,9 +56,15 @@ angular.module('aloApp').controller('EditorController', function($scope, $http, 
             json: {}
         });
 
-        $scope.fabric.setCanvasSize(910, 610);
 
-        $scope.getTemplate();
+        $scope.fabric.setCanvasSize(910, 610);
+        $scope.fabric.getCanvas().setBackgroundImage('http://alokartvizit.com/bgs/' + $scope.template.design.page._bgUrl, $scope.fabric.getCanvas().renderAll.bind($scope.fabric.getCanvas()), {
+                    backgroundImageOpacity: 1,
+                    backgroundImageStretch: true
+                });
+
+        
+        
     };
 
     $scope.$on('canvas:created', $scope.init);
