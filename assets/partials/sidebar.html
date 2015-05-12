@@ -8,7 +8,7 @@
 <div class="sidebarList">
     <div ng-switch on="activeView">
         <div ng-switch-when="template">
-            <div class="templateItem" ng-repeat="record in templates.records" ng-click="getTemplate(record['UniqueID'])">
+            <div class="templateItem" ng-repeat="record in templates.records" ng-click="getTemplate(record)">
                 <img src="http://alokartvizit.com/{{ record.ThumbImage }} "/>
             </div>
         </div>

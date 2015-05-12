@@ -1,13 +1,14 @@
 'use strict';
 
-angular.module('aloApp').controller('EditorController', function($scope, $http, Fabric, FabricConstants, Keypress) {
+angular.module('aloApp').controller('EditorController', function($scope, $rootScope, $http, Fabric, FabricConstants, Keypress) {
     $scope.fabric = {};
     $scope.FabricConstants = FabricConstants;
 
-    $scope.getTemplate = function(id) {
-        $http.get('http://signa.dev/assets/template.xml')
+    $scope.getTemplate = function(id, callback) {
+        $http.get('assets/template.xml')
             .success(function(response) {
                 $scope.template = response;
+                callback(response)
             });
     };
 
@@ -19,7 +20,7 @@ angular.module('aloApp').controller('EditorController', function($scope, $http, 
     };
 
     $scope.addImage = function(image) {
-        
+        $scope.fabric.addImage('assets/images/menu/arkaplan.png');
     };
 
     $scope.addImageUpload = function(data) {
@@ -47,27 +48,36 @@ angular.module('aloApp').controller('EditorController', function($scope, $http, 
     // Init
     // ================================================================
     $scope.init = function() {
-        $scope.getTemplate();
+        $scope.getTemplate('id', function(data) {
 
-        $scope.fabric = new Fabric({
-            JSONExportProperties: FabricConstants.JSONExportProperties,
-            textDefaults: FabricConstants.textDefaults,
-            shapeDefaults: FabricConstants.shapeDefaults,
-            json: {}
+            $scope.fabric = new Fabric({
+                JSONExportProperties: FabricConstants.JSONExportProperties,
+                textDefaults: FabricConstants.textDefaults,
+                shapeDefaults: FabricConstants.shapeDefaults,
+                json: {}
+            });
+
+            $scope.fabric.setCanvasSize(910, 610);
+
+            $scope.fabric.getCanvas().setBackgroundImage('http://alokartvizit.com/designer/' + data['design']['page']['_bgurl'], $scope.fabric.getCanvas().renderAll.bind($scope.fabric.getCanvas()), {
+                backgroundImageOpacity: 1,
+                backgroundImageStretch: true,
+                width: $scope.fabric.canvasOriginalWidth,
+                height: $scope.fabric.canvasOriginalHeight
+            });
         });
-
-
-        $scope.fabric.setCanvasSize(910, 610);
-        $scope.fabric.getCanvas().setBackgroundImage('http://alokartvizit.com/bgs/' + $scope.template.design.page._bgUrl, $scope.fabric.getCanvas().renderAll.bind($scope.fabric.getCanvas()), {
-                    backgroundImageOpacity: 1,
-                    backgroundImageStretch: true
-                });
-
-        
-        
     };
 
     $scope.$on('canvas:created', $scope.init);
+    $rootScope.$on('templateChange', function(e, data) {
+        $scope.fabric.getCanvas().setBackgroundImage('http://alokartvizit.com/' + data['record']['ThumbImage'], $scope.fabric.getCanvas().renderAll.bind($scope.fabric.getCanvas()), {
+            backgroundImageOpacity: 1,
+            backgroundImageStretch: true,
+            width: $scope.fabric.canvasOriginalWidth,
+            height: $scope.fabric.canvasOriginalHeight
+        });
+    });
+
 
     Keypress.onSave(function() {
         $scope.updatePage();

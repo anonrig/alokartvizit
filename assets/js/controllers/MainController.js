@@ -1,10 +1,10 @@
 'use strict';
 
-angular.module('aloApp').controller('MainController', function($scope, $http) {
+angular.module('aloApp').controller('MainController', function($scope, $rootScope, $http) {
     $scope.activeView = 'template';
 
     $scope.getTemplates = function() {
-        $http.get('http://signa.dev/assets/data.json', {
+        $http.get('assets/data.json', {
             request: -1,
             type: 1,
             page: 0
@@ -15,12 +15,17 @@ angular.module('aloApp').controller('MainController', function($scope, $http) {
             });
     };
 
-    $scope.getTemplate = function(id) {
-        $http.get('http://signa.dev/assets/template.xml')
+    $scope.getTemplate = function(record) {
+        // record['UniqueID']
+        $http.get('assets/template.xml')
             .success(function(response) {
                 $scope.template = response;
                 console.log(response);
+                $rootScope.$broadcast('templateChange', {
+                    record: record
+                });
             });
+
     };
 
     $scope.getTemplates();
