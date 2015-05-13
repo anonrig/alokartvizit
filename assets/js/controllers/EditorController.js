@@ -72,7 +72,7 @@ angular.module('aloApp').controller('EditorController', function($scope, $rootSc
                     top: parseFloat(text['_topy'], 10),
                     left: parseFloat(text['_leftx'], 10),
                     fontFamily: text.text.font._fontface,
-                    fontSize: text.text.font._fontsize,
+                    fontSize: parseInt(text.text.font._fontsize),
                     fontWeight: (text.text.font._fontbold == "1" ? "bold" : "normal"),
                     fontStyle: (text.text.font._fontitalic == "1" ? "italic" : "normal"),
                     textDecoration: (text.text.font._fontul == "1" ? "underline" : "none"),
