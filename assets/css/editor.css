@@ -1,5 +1,7 @@
 .image-builder-container {
   position: relative;
+  height: 100%;
+  overflow: auto;
 }
 .image-builder-container .image-builder {
   background: #cacaca;
