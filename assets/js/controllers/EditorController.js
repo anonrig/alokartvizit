@@ -65,8 +65,6 @@ angular.module('aloApp').controller('EditorController', function($scope, $rootSc
             });
 
             $scope.currentTemplate['design']['page']['layout']['group'].forEach(function(text) {
-                console.log(text['_leftx'])
-                console.log(text['_topy'])
                 var addedText = new fabric.IText(decodeURIComponent(text['text']['_value'], {
                     left: text['_leftx'],
                     top: text['_topy'],
