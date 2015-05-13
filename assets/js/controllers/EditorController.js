@@ -50,39 +50,44 @@ angular.module('aloApp').controller('EditorController', function($scope, $rootSc
         $scope.fabric.setCanvasSize(919, 602);
     };
 
+    $scope.updateCanvasView = function(e, data) {
+        if (data && data['design'])
+            $scope.currentTemplate = data;
+
+        if ($scope.fabric.canvasScale && $scope.currentTemplate) {
+            $scope.fabric.getCanvas().clear();
+
+            $scope.fabric.getCanvas().setBackgroundImage('http://alokartvizit.com/designer/' + $scope.currentTemplate['design']['page']['_bgurl'], $scope.fabric.getCanvas().renderAll.bind($scope.fabric.getCanvas()), {
+                width: $scope.fabric.canvasOriginalWidth,
+                height: $scope.fabric.canvasOriginalHeight,
+                scaleX: $scope.fabric.canvasScale,
+                scaleY: $scope.fabric.canvasScale
+            });
+
+            $scope.currentTemplate['design']['page']['layout']['group'].forEach(function(text) {
+                console.log(text['_leftx'])
+                console.log(text['_topy'])
+                var addedText = new fabric.IText(decodeURIComponent(text['text']['_value'], {
+                    left: text['_leftx'],
+                    top: text['_topy'],
+                    fontFamily: text.text.font._fontface,
+                    fontSize: text.text.font._fontsize,
+                    fontWeight: (text.text.font._fontbold == "1" ? "bold" : "normal"),
+                    fontStyle: (text.text.font._fontitalic == "1" ? "italic" : "normal"),
+                    textDecoration: (text.text.font._fontul == "1" ? "underline" : "none"),
+                    textAlign: text.text.font._fontalign,
+                    cursorColor: text.text.font._fontcolor,
+                    fill: text.text.font._fontcolor
+                })).scale($scope.fabric.canvasScale);
+
+                $scope.fabric.getCanvas().add(addedText);
+            });
+        }
+    };
+
     $scope.$on('canvas:created', $scope.init);
-
-    $rootScope.$on('templateChange', function(e, data) {
-        $scope.fabric.getCanvas().setBackgroundImage('http://alokartvizit.com/designer/' + data['design']['page']['_bgurl'], $scope.fabric.getCanvas().renderAll.bind($scope.fabric.getCanvas()), {
-            backgroundImageOpacity: 1,
-            backgroundImageStretch: true,
-            width: $scope.fabric.canvasOriginalWidth,
-            height: $scope.fabric.canvasOriginalHeight
-        });
-
-        $scope.fabric.getCanvas().clear();
-
-        data['design']['page']['layout']['group'].forEach(function(text) {
-            var scaleFactor = 1;
-
-            var addedText = new fabric.IText(decodeURIComponent(text['text']['_value'], {
-                left: text['_leftx'] * scaleFactor,
-                top: text['_topy'] * scaleFactor,
-                fontFamily: text.text.font._fontface,
-                fontSize: text.text.font._fontsize,
-                fontWeight: (text.text.font._fontbold == "1" ? "bold" : "normal"),
-                fontStyle: (text.text.font._fontitalic == "1" ? "italic" : "normal"),
-                textDecoration: (text.text.font._fontul == "1" ? "underline" : "none"),
-                textAlign: text.text.font._fontalign,
-                cursorColor: text.text.font._fontcolor,
-                fill: text.text.font._fontcolor
-            })).scale(scaleFactor);
-
-            $scope.fabric.getCanvas().add(addedText);
-        });
-
-        $scope.fabric.getCanvas().renderAll();
-    });
+    $scope.$watch('fabric.canvasScale', $scope.updateCanvasView);
+    $rootScope.$on('templateChange', $scope.updateCanvasView);
 
     Keypress.onSave(function() {
         $scope.updatePage();
