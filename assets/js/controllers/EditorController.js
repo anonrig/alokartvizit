@@ -65,13 +65,23 @@ angular.module('aloApp').controller('EditorController', function($scope, $rootSc
             });
 
             $scope.currentTemplate['design']['page']['layout']['group'].forEach(function(text) {
-                var decodedText = decodeURIComponent(text['text']['_value']).replace('+', ' '),
+                text['text']['_value'] = text['text']['_value'].replace(/%0D/ig, "\n");
+                var decodedText = decodeURIComponent(text['text']['_value']).replace(new RegExp( '\\+', 'g' ), ' '),
                     fontColor = text.text.font._fontcolor;
+
+                var fontFamily = $scope.fonts[text.text.font._fontface].regular;
+
+                if (parseInt(text.text.font._fontbold) && parseInt(text.text.font._fontitalic))
+                    fontFamily = $scope.fonts[text.text.font._fontface].bold_italic;
+                else if (parseInt(text.text.font._fontbold))
+                    fontFamily = $scope.fonts[text.text.font._fontface].bold;
+                else if (parseInt(text.text.font._fontitalic))
+                    fontFamily = $scope.fonts[text.text.font._fontface].italic;
 
                 var addedText = new fabric.IText(decodedText, {
                     top: parseFloat(text['_topy'], 10),
                     left: parseFloat(text['_leftx'], 10),
-                    fontFamily: text.text.font._fontface,
+                    fontFamily: fontFamily,
                     fontSize: parseInt(text.text.font._fontsize),
                     fontWeight: (text.text.font._fontbold == "1" ? "bold" : "normal"),
                     fontStyle: (text.text.font._fontitalic == "1" ? "italic" : "normal"),
@@ -93,4 +103,70 @@ angular.module('aloApp').controller('EditorController', function($scope, $rootSc
     Keypress.onSave(function() {
         $scope.updatePage();
     });
+
+    $scope.fonts = {
+        'Vineta BT': {
+            regular: "VinetaBT-Regular"
+        },
+        'Verdana': {
+            regular: "Verdana"
+        },
+        'Venetian': {
+            regular: "Venetian301BT-Roman", italic: "Venetian301BT-Italic", bold: "Venetian301BT-Demi", bold_italic: "Venetian301BT-DemiItalic"
+        },
+        'Times New Roman': {
+            regular: "Times New Roman"
+        },
+        'Sonic Cut': {
+            regular: "SonicCutThruBT-Heavy"
+        },
+        'Prose Antique': {
+            regular: "ProseAntiquePlain-Regular", bold: "ProseAntiqueBold-Regular"
+        },
+        'Helvetica Condensed': {
+            regular: "Candara-Regular", italic: "Candara-Italic", bold: "Candara-Bold", bold_italic: "Candara-BoldItalic"
+        },
+        'Futura MD BT': {
+            regular: "FuturaBT-Medium"
+        },
+        'Freestyle Script': {
+            regular: "FreestyleScript-Regular"
+        },
+        'Freehand 521': {
+            regular: "Freehand521BT-RegularC"
+        },
+        'Comic Sans': {
+            regular: "ComicSansMS-Regular", bold: "ComicSansMS-Bold"
+        },
+        'Century Gothic': {
+            regular: "CenturyGothic-Regular", italic: "CenturyGothic-Italic", bold: "CenturyGothic-Bold", bold_italic: "CenturyGothic-BoldItalic"
+        },
+        'Century Expanded': {
+            regular: "CenturionOldPlain-Regular", italic: "CenturionOldItalic-Regular", bold: "CenturionOldBold-Regular"
+        },
+        'Candara': {
+            regular: "Candara-Regular", italic: "Candara-Italic", bold: "Candara-Bold", bold_italic: "Candara-BoldItalic"
+        },
+        'Buxom': {
+            regular: "BuxomD-Regular"
+        },
+        'BrodyD': {
+            regular: "BrodyD-Regular"
+        },
+        'Brody': {
+            regular: "Brody-Regular"
+        },
+        'Bip Funny': {
+            regular: "BIP-Regular"
+        },
+        'Bahamas': {
+            regular: "BahamasPlain-Regular", bold: "BahamasBold-Regular"
+        },
+        'Andale Sans': {
+            regular: "AndaleSans-Regular", italic: "AndaleSans-Italic", bold: "AndaleSans-Bold", bold_italic: "AndaleSans-BoldItalic"
+        },
+        'Albany': {
+            regular: "Albany-Regular", italic: "Albany-Italic", bold: "Albany-Bold", bold_italic: "Albany-BoldItalic"
+        }
+    }
 });
