@@ -65,7 +65,10 @@ angular.module('aloApp').controller('EditorController', function($scope, $rootSc
             });
 
             $scope.currentTemplate['design']['page']['layout']['group'].forEach(function(text) {
-                var addedText = new fabric.IText(decodeURIComponent(text['text']['_value']), {
+                var decodedText = decodeURIComponent(text['text']['_value']).replace('+', ' '),
+                    fontColor = text.text.font._fontcolor;
+
+                var addedText = new fabric.IText(decodedText, {
                     top: parseFloat(text['_topy'], 10),
                     left: parseFloat(text['_leftx'], 10),
                     fontFamily: text.text.font._fontface,
@@ -74,8 +77,8 @@ angular.module('aloApp').controller('EditorController', function($scope, $rootSc
                     fontStyle: (text.text.font._fontitalic == "1" ? "italic" : "normal"),
                     textDecoration: (text.text.font._fontul == "1" ? "underline" : "none"),
                     textAlign: text.text.font._fontalign,
-                    cursorColor: text.text.font._fontcolor,
-                    fill: text.text.font._fontcolor
+                    cursorColor: '#' + parseInt(fontColor.substring(1, fontColor.length - 1),16),
+                    fill: '#' + parseInt(fontColor.substring(1, fontColor.length - 1),16)
                 }).scale($scope.fabric.canvasScale);
 
                 $scope.fabric.getCanvas().add(addedText);
