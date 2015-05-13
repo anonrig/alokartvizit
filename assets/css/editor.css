@@ -81,16 +81,17 @@
 }
 
 .bottom.menu {
-  width: 25%;
+  width: 20%;
   height: 40px;
   overflow: hidden;
-  position: absolute;
+  position: fixed;
   bottom: 0;
   line-height: 40px;
   background: #3f4652;
   color: white;
   right: 0;
   border-top-left-radius: 10px;
+  z-index: 50;
 }
 
 .top.menu > .button {
