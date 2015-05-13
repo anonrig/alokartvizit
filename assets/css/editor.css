@@ -81,7 +81,7 @@
 }
 
 .bottom.menu {
-  width: 100%;
+  width: 25%;
   height: 40px;
   overflow: hidden;
   position: absolute;
@@ -89,6 +89,8 @@
   line-height: 40px;
   background: #3f4652;
   color: white;
+  right: 0;
+  border-top-left-radius: 10px;
 }
 
 .top.menu > .button {
@@ -101,7 +103,7 @@
 
 .bottom.menu > .button {
   display: inline-block;
-  width: 20%;
+  width: 50%;
   text-align: center;
   float: right;
   cursor: pointer;
