@@ -47,7 +47,7 @@ angular.module('aloApp').controller('EditorController', function($scope, $rootSc
             json: {}
         });
 
-        $scope.fabric.setCanvasSize(910, 610);
+        $scope.fabric.setCanvasSize(919, 602);
     };
 
     $scope.$on('canvas:created', $scope.init);
