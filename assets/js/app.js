@@ -5,7 +5,8 @@ var aloApp = angular.module('aloApp', [
     'common.fabric',
     'common.fabric.utilities',
     'common.fabric.constants',
-    'infinite-scroll'
+    'infinite-scroll',
+    'ngFileUpload'
 ]);
 
 aloApp.config(['$routeProvider', '$httpProvider', function($routeProvider, $httpProvider) {
