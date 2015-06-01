@@ -12,7 +12,7 @@ angular.module('aloApp').controller('EditorController', function($scope, $rootSc
     };
 
     $scope.addImage = function(image) {
-        $scope.fabric.addImage('assets/images/menu/arkaplan.png');
+        $scope.fabric.addImage(image);
     };
 
     $scope.addImageUpload = function(data) {
@@ -101,6 +101,21 @@ angular.module('aloApp').controller('EditorController', function($scope, $rootSc
     $rootScope.$on('templateChange', $scope.updateCanvasView);
     $rootScope.$on('addTextToEditor', function(e, data) {
         $scope.fabric.addText(null, data);
+    });
+
+    $rootScope.$on('addBackgroundToEditor', function(e, data) {
+        var URL = window.URL || window.webkitURL;
+        $scope.fabric.getCanvas().setBackgroundImage(URL.createObjectURL(data), $scope.fabric.getCanvas().renderAll.bind($scope.fabric.getCanvas()), {
+            width: $scope.fabric.canvasOriginalWidth,
+            height: $scope.fabric.canvasOriginalHeight,
+            scaleX: $scope.fabric.canvasScale,
+            scaleY: $scope.fabric.canvasScale
+        });
+    });
+
+    $rootScope.$on('addImageToEditor', function(e, data) {
+        var URL = window.URL || window.webkitURL;
+        $scope.addImage(URL.createObjectURL(data));
     });
 
     Keypress.onSave(function() {

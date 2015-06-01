@@ -1,8 +1,8 @@
 <div class="sidebarMenu">
-    <div class="menuItem template" ng-click="activeView = 'template'"></div>
-    <div class="menuItem text" ng-click="activeView = 'text'"></div>
-    <div class="menuItem background" ng-click="activeView = 'background'"></div>
-    <div class="menuItem upload" ng-click="activeView = 'upload'"></div>
+    <div class="menuItem template" ng-click="setActiveView('template')"></div>
+    <div class="menuItem text" ng-click="setActiveView('text')"></div>
+    <div class="menuItem background" ng-click="setActiveView('background')"></div>
+    <div class="menuItem upload" ng-click="setActiveView('upload')"></div>
 </div>
 
 <div class="sidebarList" infinite-scroll="loadMore()">
@@ -23,13 +23,41 @@
         <div ng-switch-when="background">
             <div class="backgroundImages">
                 <h1> Arkaplan Resimleri </h1>
-                <div class="dropContainer"></div>
+                <div class="dropContainer">
+                    <div ngf-drop ng-model="files" class="dropBox"
+                         ngf-drag-over-class="dragover" ngf-multiple="true" ngf-allow-dir="true"
+                         ngf-accept="'image/*,application/pdf'">
+                       BURAYA SÜRÜKLEYİN
+                    </div>
+
+                    <div class="uploadButton" ngf-select ng-model="files">Dosya Seç</div>
+                    <!--<div class="uploadButton" ngf-select ngf-change="upload($files)">Dosya Seç</div>--> <!-- Todo: Use after upload backend done -->
+
+                    <div ngf-no-file-drop> Sürükle Bırak Desteklenmiyor. </div>
+
+                </div>
+                <img ngf-src="files[0]" ngf-accept="'image/*'" class="loadedImage" ng-click="addBackgroundToEditor(files[0])" ng-if="files[0]">
+                <!--<img ng-repeat="file in uploadedBgImages" ngf-src="file" ngf-accept="'image/*'" class="loadedImage" ng-click="addBackgroundToEditor(file)">--> <!-- Todo: Use after upload backend done -->
             </div>
         </div>
         <div ng-switch-when="upload">
             <div class="backgroundImages">
                 <h1> Yüklediğiniz Resimler </h1>
-                <div class="dropContainer"></div>
+                <div class="dropContainer">
+                    <div ngf-drop ng-model="files" class="dropBox"
+                         ngf-drag-over-class="dragover" ngf-multiple="true" ngf-allow-dir="true"
+                         ngf-accept="'image/*,application/pdf'">
+                        BURAYA SÜRÜKLEYİN
+                    </div>
+
+                    <div class="uploadButton" ngf-select ng-model="files">Dosya Seç</div>
+                    <!--<div class="uploadButton" ngf-select ngf-change="upload($files)">Dosya Seç</div>--> <!-- Todo: Use after upload backend done -->
+
+                    <div ngf-no-file-drop> Sürükle Bırak Desteklenmiyor. </div>
+
+                </div>
+                <img ngf-src="files[0]" ngf-accept="'image/*'" class="loadedImage" ng-click="addImageToEditor(files[0])" ng-if="files[0]">
+                <!--<img ng-repeat="file in uploadedBgImages" ngf-src="file" ngf-accept="'image/*'" class="loadedImage" ng-click="addBackgroundToEditor(file)">--> <!-- Todo: Use after upload backend done -->
             </div>
         </div>
     </div>

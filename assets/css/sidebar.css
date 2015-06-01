@@ -89,3 +89,37 @@
     margin-bottom: 20px;
     text-align: center;
 }
+
+.dropContainer {
+    background: #373a3d;
+    padding: 20px;
+    color: white;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.dropContainer .uploadButton {
+    background-color: #007a96;
+    padding: 12px 26px;
+    color: #fff;
+    font-size: 14px;
+    border-radius: 2px;
+    cursor: pointer;
+    display: inline-block;
+    line-height: 1;
+    margin: 12px auto 0;
+}
+
+.dropBox {
+    background-color: #2E3134;
+    border: 2px dotted #444A4D;
+    border-radius: 3px;
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 16px;
+    padding: 30px 10px;
+}
+
+.loadedImage {
+    width: 100%;
+}
