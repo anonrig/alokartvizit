@@ -35,35 +35,10 @@
         <div class="editor smallModal" ng-if='fabric.selectedObject'>
           <div ng-switch='fabric.selectedObject.type'>
             <div ng-switch-when='text'>
-              <p>
-                <textarea style="text-align: {{ fabric.selectedObject.textAlign }}" class="form-control" rows="6" ng-model="fabric.selectedObject.text"></textarea>
-              </p>
-              
               <p title="Font size">
                 <i class="fa fa-text-height"></i>
                 <input type='number' class="form-control" ng-model="fabric.selectedObject.fontSize" />
               </p>
-
-              <p title="Line height">
-                <i class="fa fa-align-left"></i>
-                <input type='number' class="form-control" ng-model="fabric.selectedObject.lineHeight" step=".1" />
-              </p>
-
-              <div class='btn-group'>
-                <button ng-class="{ active: fabric.selectedObject.textAlign == 'left' }" ng-click="fabric.selectedObject.textAlign = 'left'" class='btn btn-small'>
-                  <i class='fa fa-align-left'></i>
-                </button>
-
-                <button ng-class="{ active: fabric.selectedObject.textAlign == 'center' }" ng-click="fabric.selectedObject.textAlign = 'center'" class='btn btn-small'>
-                  <i class='fa fa-align-center'></i>
-                </button>
-
-                <button ng-class="{ active: fabric.selectedObject.textAlign == 'right' }" ng-click="fabric.selectedObject.textAlign = 'right'" class='btn btn-small'>
-                  <i class='fa fa-align-right'></i>
-                </button>
-              </div>
-
-              <br />
 
               <div class='btn-group'>
                 <button ng-class="{ active: fabric.isBold() }" ng-click="fabric.toggleBold()" class='btn btn-small'>
@@ -112,47 +87,11 @@
             </div>
           </div>
 
-          <div class="row">
-            <div class="col-sm-12">
-              <input class='col-sm-12' title="Transparency" type='range'
-                     min="0"
-                     max="1"
-                     step=".01"
-                     ng-model="fabric.selectedObject.opacity" />
-            </div>
-          </div>
-
-          <div class="row mbm">
-            <div class="col-sm-12">
-              <button class='btn btn-small btn-block' ng-class="{ active: fabric.getFlipX() }" ng-click="{ active: fabric.toggleFlipX() }">
-                <i class='fa fa-exchange'></i> Flip
-              </button>
-            </div>
-          </div>
-
           <div class="row" ng-hide="fabric.selectedObject.type == 'image'">
             <div class="col-sm-12">
               <input type="text" class='form-control' ng-model="fabric.selectedObject.fill" />
             </div>
           </div>
-
-          <div class="row">
-            <div class="btn-group col-xs-12 btn-group-vertical">
-              <button ng-click='fabric.center()' class='btn btn-small btn-block'>
-                Center
-              </button>
-
-              <button ng-click='fabric.centerH()' class='btn btn-small btn-block'>
-                Center Horizontally
-              </button>
-
-              <button ng-click='fabric.centerV()' class='btn btn-small btn-block'>
-                Center Vertically
-              </button>
-            </div>
-          </div>
-
-          <br />
 
           <div class="row">
             <div class="btn-group col-xs-12 btn-group-vertical">
@@ -173,12 +112,6 @@
               </button>
             </div>
           </div>
-
-          <br />
-
-          <button ng-click='fabric.toggleLockActiveObject(); fabric.setDirty(true)' ng-class="{ active: fabric.selectedObject.lockObject }" class='btn btn-small btn-block'>
-            Lock
-          </button>
         </div>
       </div>
 
