@@ -65,11 +65,22 @@ angular.module('aloApp').controller('EditorController', function($scope, $rootSc
             });
 
             $scope.currentTemplate['design']['page']['layout']['group'].forEach(function(text) {
-                text['text']['_value'] = text['text']['_value'].replace(/%0D/ig, "\n");
-                var decodedText = decodeURIComponent(text['text']['_value']).replace(new RegExp( '\\+', 'g' ), ' '),
-                    fontColor = text.text.font._fontcolor;
+                var encodedText = text['text']['_value'],
+                    encodedText = encodedText.replace(/%0D/ig, "\n"),
+                    decodedText = decodeURIComponent(encodedText).replace(new RegExp( '\\+', 'g' ), ' '),
+                    fontColor = text.text.font._fontcolor.toString(16),
+                    fontFamily = $scope.fonts[text.text.font._fontface].regular;
 
-                var fontFamily = $scope.fonts[text.text.font._fontface].regular;
+                if (parseInt(fontColor, 16) < 0) {
+                    fontColor = 0xFFFFFFFF + fontColor;
+                    fontColor =  fontColor.toString(16);
+                    fontColor = "#" + fontColor.substring(2, 16);
+                    fontColor = fontColor.split('-')[0];
+                    console.log(fontColor);
+                } else {
+                    console.log(fontColor);
+                    fontColor = '#' + fontColor.substring(1, fontColor.length - 1);
+                }
 
                 if (parseInt(text.text.font._fontbold) && parseInt(text.text.font._fontitalic))
                     fontFamily = $scope.fonts[text.text.font._fontface].bold_italic;
@@ -87,7 +98,7 @@ angular.module('aloApp').controller('EditorController', function($scope, $rootSc
                     fontStyle: (text.text.font._fontitalic == "1" ? "italic" : "normal"),
                     textDecoration: (text.text.font._fontul == "1" ? "underline" : "none"),
                     textAlign: text.text.font._fontalign,
-                    cursorColor: '#' + parseInt(fontColor.substring(1, fontColor.length - 1),16),
+                    cursorColor: fontColor,
                     fill: '#' + parseInt(fontColor.substring(1, fontColor.length - 1),16)
                 }).scale($scope.fabric.canvasScale);
 
