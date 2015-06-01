@@ -99,6 +99,9 @@ angular.module('aloApp').controller('EditorController', function($scope, $rootSc
     $scope.$on('canvas:created', $scope.init);
     $scope.$watch('fabric.canvasScale', $scope.updateCanvasView);
     $rootScope.$on('templateChange', $scope.updateCanvasView);
+    $rootScope.$on('addTextToEditor', function(e, data) {
+        $scope.fabric.addText(null, data);
+    });
 
     Keypress.onSave(function() {
         $scope.updatePage();

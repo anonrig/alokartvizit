@@ -265,8 +265,9 @@ angular.module('common.fabric', [
 		//
 		// Text
 		// ==============================================================
-		self.addText = function(str) {
-			str = str || 'New Text';
+		self.addText = function(str, fontSize) {
+			str = str || 'Yeni Metin';
+            self.textDefaults.fontSize = fontSize || 40;
 			var object = new FabricWindow.Text(str, self.textDefaults);
 			object.id = self.createId();
 

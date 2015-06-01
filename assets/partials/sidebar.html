@@ -13,13 +13,24 @@
             </div>
         </div>
         <div ng-switch-when="text">
-            METİN
+            <div class="textTypes">
+                <h1 class="textType" ng-click="addTextToEditor(54)"> Büyük Başlık </h1>
+                <h2 class="textType" ng-click="addTextToEditor(36)"> Alt Başlık </h2>
+                <h3 class="textType" ng-click="addTextToEditor(22)"> Normal Metin </h3>
+                <h4 class="textType" ng-click="addTextToEditor(14)"> Küçük Metin </h4>
+            </div>
         </div>
         <div ng-switch-when="background">
-            ARKAPLAN
+            <div class="backgroundImages">
+                <h1> Arkaplan Resimleri </h1>
+                <div class="dropContainer"></div>
+            </div>
         </div>
         <div ng-switch-when="upload">
-            YÜKLENEN
+            <div class="backgroundImages">
+                <h1> Yüklediğiniz Resimler </h1>
+                <div class="dropContainer"></div>
+            </div>
         </div>
     </div>
 </div>

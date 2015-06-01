@@ -38,4 +38,8 @@ angular.module('aloApp').controller('MainController', function($scope, $rootScop
         $scope.incrementCurrentPage();
         $scope.getTemplates();
     };
+
+    $scope.addTextToEditor = function(fontSize) {
+        $rootScope.$broadcast('addTextToEditor', fontSize);
+    };
 });

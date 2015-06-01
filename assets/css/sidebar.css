@@ -64,3 +64,28 @@
 .templateItem > img {
     width: 100%;
 }
+
+.textTypes {
+    padding-top: 20px;
+}
+
+.textTypes .textType {
+    color: white;
+    font-style: normal;
+    font-weight: normal;
+    text-align: center;
+    margin-bottom: 20px;
+    cursor: pointer;
+}
+
+.textTypes h1 { font-size: 50px; }
+.textTypes h2 { font-size: 36px; }
+.textTypes h3 { font-size: 22px; }
+.textTypes h4 { font-size: 14px; }
+
+.backgroundImages h1 {
+    font-size: 22px;
+    color: white;
+    margin-bottom: 20px;
+    text-align: center;
+}
