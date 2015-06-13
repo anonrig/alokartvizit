@@ -56,9 +56,9 @@ angular.module('aloApp').controller('MainController', function($scope, $rootScop
 
     $scope.progressPercentage = 0;
     $scope.upload = function (files) {
-        var url = 'upload/url';
-        //if ($scope.activeView == 'background')
-        //    url = 'http://alokartvizit.com/designer/fabrics/upload_form/upload.php?imageType=bg';
+        var url = 'http://alokartvizit.com/designer/fabrics/upload_form/upload.php?imageType=';
+
+        url += ($scope.activeView == 'background') ? 'bg' : 'all';
 
         if (files && files.length) {
             for (var i = 0; i < files.length; i++) {
@@ -66,12 +66,12 @@ angular.module('aloApp').controller('MainController', function($scope, $rootScop
                 Upload.upload({
                     url: url,
                     fields: {},
-                    file: file
+                    upl: file
                 }).progress(function (evt) {
                     $scope.progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-                    console.log('progress: ' + $scope.progressPercentage + '% ' + evt.config.file.name);
+                    console.log('progress: ' + $scope.progressPercentage + '% ' + evt.config.upl.name);
                 }).success(function (data, status, headers, config) {
-                    console.log('file ' + config.file.name + 'uploaded. Response: ' + data);
+                    console.log('file ' + config.upl.name + 'uploaded. Response: ' + data);
                     if ($scope.activeView == 'background')
                         $scope.uploadedBgImages.push(data);
                     else
