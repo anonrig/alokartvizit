@@ -107,7 +107,73 @@ angular.module('aloApp').controller('EditorController', function($scope, $rootSc
         }
     };
 
+
+    $scope.objectSelected = false;
+    $scope.objectProperties = {};
+    $scope.propertyElStyles = {};
+
+    $scope.toggleObjectProperties = function(isSelected, e) {
+        $scope.objectSelected = isSelected;
+        if (!$scope.objectSelected)
+            return;
+
+        $scope.setObjectProperties({
+            options: {
+                object: {
+                    top: e['detail']['top'],
+                    left: e['detail']['left'],
+                    currentHeight: e['detail']['currentHeight'],
+                    fontFamily: e['detail']['fontFamily'],
+                    fontSize: e['detail']['fontSize'],
+                    fontWeight: e['detail']['fontWeight'],
+                    fontStyle: e['detail']['fontStyle'],
+                    textAlign: e['detail']['textAlign'],
+                    color: e['detail']['fill']
+                },
+                canvas: {
+                    offsetTop: $scope.fabric.getCanvas()['_offset']['top'],
+                    offsetLeft: $scope.fabric.getCanvas()['_offset']['left']
+                }
+            }
+        });
+    };
+
+    $scope.setObjectProperties = function(data) {
+        if (data['options']) {
+            $scope.objectProperties = data['options']['object'];
+            var canvasProperties = data['options']['canvas'];
+
+            $scope.propertyElStyles = {
+                'top': $scope.objectProperties['top'] + $scope.objectProperties['currentHeight'] + canvasProperties['offsetTop'] + 20 + 'px',
+                'left': $scope.objectProperties['left'] + 20 + 'px'
+            };
+        }
+    };
+
     $scope.$on('canvas:created', $scope.init);
+
+    document.addEventListener('selectionCleared', function () {
+        $scope.toggleObjectProperties(false);
+        $('.colorpicker').removeClass('colorpicker-visible');
+    }, false);
+
+    document.addEventListener('mouseUp', function (e) {
+        $('.colorpicker').removeClass('colorpicker-visible');
+        $scope.toggleObjectProperties(true, e);
+        setTimeout(function() {
+            $('.objectProperties').css('opacity', '1');
+        }, 100);
+    }, false);
+
+    document.addEventListener('objectMoving', function (e) {
+        $('.objectProperties').css('opacity', '0');
+        $('.colorpicker').removeClass('colorpicker-visible');
+    }, false);
+
+    document.addEventListener('objectSelected', function (e) {
+        $scope.toggleObjectProperties(true, e);
+    }, false);
+
     $scope.$watch('fabric.canvasScale', $scope.updateCanvasView);
     $rootScope.$on('templateChange', $scope.updateCanvasView);
     $rootScope.$on('addTextToEditor', function(e, data) {

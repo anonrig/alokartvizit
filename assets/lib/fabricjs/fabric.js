@@ -854,6 +854,9 @@ angular.module('common.fabric', [
 				$timeout(function() {
 					self.selectActiveObject();
 					self.setDirty(true);
+
+                    var event = new CustomEvent('objectSelected', { 'detail': self.selectedObject });
+                    document.dispatchEvent(event);
 				});
 			});
 
@@ -864,6 +867,8 @@ angular.module('common.fabric', [
 			canvas.on('selection:cleared', function() {
 				$timeout(function() {
 					self.deselectActiveObject();
+                    var event = new CustomEvent('selectionCleared');
+                    document.dispatchEvent(event);
 				});
 			});
 
@@ -877,6 +882,21 @@ angular.module('common.fabric', [
 					self.updateActiveObjectOriginals();
 					self.setDirty(true);
 				});
+			});
+
+			canvas.on('mouse:down', function() {
+                var event = new CustomEvent('mouseDown');
+                document.dispatchEvent(event);
+			});
+
+			canvas.on('mouse:up', function() {
+                var event = new CustomEvent('mouseUp', { 'detail': self.selectedObject });
+                document.dispatchEvent(event);
+			});
+
+			canvas.on('object:moving', function() {
+                var event = new CustomEvent('objectMoving');
+                document.dispatchEvent(event);
 			});
 		};
 
