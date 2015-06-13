@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('aloApp').controller('MainController', function($scope, $rootScope, $http, Upload) {
+angular.module('aloApp').controller('MainController', function($scope, $rootScope, $http, Upload, growl) {
     $scope.activeView = 'template';
     $scope.currentPage = 0;
     $scope.templates = {
@@ -71,6 +71,11 @@ angular.module('aloApp').controller('MainController', function($scope, $rootScop
                     $scope.progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
                     console.log('progress: ' + $scope.progressPercentage + '% ' + evt.config.upl.name);
                 }).success(function (data, status, headers, config) {
+                    if (data.status === 'error')
+                        growl.addErrorMessage("Resmi yüklerken bir sorun oluştu.");
+                    else
+                        growl.addSuccessMessage("Resim başarıyla yüklendi.");
+
                     console.log('file ' + config.upl.name + 'uploaded. Response: ' + data);
                     if ($scope.activeView == 'background')
                         $scope.uploadedBgImages.push(data);
