@@ -150,6 +150,73 @@ angular.module('aloApp').controller('EditorController', function($scope, $rootSc
         }
     };
 
+    $scope.lists = [{
+      name: 'Öne Getir',
+      id: 0
+    }, {
+      name: 'Arkaya Götür',
+      id: 1
+    }, {
+        name: 'Dönmeyi Sıfırla',
+        id: 2
+    }, {
+        name: 'Strect',
+        id: 3
+    }, {
+        name: 'Sil',
+        id: 4
+    }]
+
+    $scope.clickMenu = function (item) {
+        var selectedObject = $scope.fabric.selectedObject;
+
+        switch (item.id) {
+            case 0: 
+                //One Getir
+                if (selectedObject) {
+                    $scope.fabric.bringToFront(); 
+                    $scope.fabric.setDirty(true)
+                }
+                break;  
+            case 1:
+                //Arkaya Gotur
+                if (selectedObject) {
+                    $scope.fabric.sendBackwards(); 
+                    $scope.fabric.setDirty(true)
+                }
+                break;
+            case 2:
+                //Donmeyi Sifirla
+                if (selectedObject) {
+                    selectedObject.setAngle(0);
+                }
+                break;
+            case 3:
+                //Strect
+                if (selectedObject) {
+                    var canvas = $scope.fabric.getCanvas();
+
+                    selectedObject.setTop(0);
+                    selectedObject.setLeft(0);
+                    selectedObject.setScaleX($scope.fabric.getCanvas().width / selectedObject.width);
+                    selectedObject.setScaleY($scope.fabric.getCanvas().height / selectedObject.height);
+
+                    $scope.fabric.getCanvas().renderAll();
+                }
+                break;
+            case 4:
+                //Sil
+                if (selectedObject) {
+                    $scope.fabric.deleteActiveObject(); 
+                    $scope.fabric.setDirty(true);
+                }
+                break;
+            default:
+                console.log('Nothing clicked');
+                break;
+        };
+    };
+
     $scope.$on('canvas:created', $scope.init);
 
     document.addEventListener('selectionCleared', function () {
