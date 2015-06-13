@@ -198,10 +198,10 @@ angular.module('aloApp').controller('EditorController', function($scope, $rootSc
 
                     selectedObject.setTop(0);
                     selectedObject.setLeft(0);
-                    selectedObject.setScaleX($scope.fabric.getCanvas().width / selectedObject.width);
-                    selectedObject.setScaleY($scope.fabric.getCanvas().height / selectedObject.height);
+                    selectedObject.setScaleX(canvas.width / selectedObject.width);
+                    selectedObject.setScaleY(canvas.height / selectedObject.height);
 
-                    $scope.fabric.getCanvas().renderAll();
+                    canvas.renderAll();
                 }
                 break;
             case 4:
