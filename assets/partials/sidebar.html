@@ -30,14 +30,14 @@
                        BURAYA SÜRÜKLEYİN
                     </div>
 
-                    <div class="uploadButton" ngf-select ng-model="files">Dosya Seç</div>
-                    <!--<div class="uploadButton" ngf-select ngf-change="upload($files)">Dosya Seç</div>--> <!-- Todo: Use after upload backend done -->
+                    <!-- <div class="uploadButton" ngf-select ng-model="files">Dosya Seç</div> -->
+                    <div class="uploadButton" ngf-select ngf-change="upload($files)">Dosya Seç</div> <!-- Todo: Use after upload backend done -->
 
                     <div ngf-no-file-drop> Sürükle Bırak Desteklenmiyor. </div>
 
                 </div>
-                <img ngf-src="files[0]" ngf-accept="'image/*'" class="loadedImage" ng-click="addBackgroundToEditor(files[0])" ng-if="files[0]">
-                <!--<img ng-repeat="file in uploadedBgImages" ngf-src="file" ngf-accept="'image/*'" class="loadedImage" ng-click="addBackgroundToEditor(file)">--> <!-- Todo: Use after upload backend done -->
+
+                <img ng-repeat="file in uploadedBgImages" ngf-src="file" ngf-accept="'image/*'" class="loadedImage" ng-click="addBackgroundToEditor(file)"> <!-- Todo: Use after upload backend done -->
             </div>
         </div>
         <div ng-switch-when="upload">
