@@ -6,8 +6,16 @@ var aloApp = angular.module('aloApp', [
     'common.fabric.utilities',
     'common.fabric.constants',
     'infinite-scroll',
-    'ngFileUpload'
+    'ngFileUpload',
+    'angular-growl'
 ]);
+
+
+aloApp.config(['growlProvider', function(growlProvider) {
+    growlProvider.onlyUniqueMessages(false);
+    growlProvider.globalTimeToLive(5000);
+}]);
+
 
 aloApp.config(['$routeProvider', '$httpProvider', function($routeProvider, $httpProvider) {
     $routeProvider.

@@ -13,15 +13,20 @@
         <script src="./assets/lib/jquery.min.js"></script>
 
         <!-- Styles  -->
+        <link rel="stylesheet" type="text/css" href="./assets/css/angular-growl.min.css">
         <link rel="stylesheet" type="text/css" href="./assets/css/reset.css">
         <link rel="stylesheet" type="text/css" href="./assets/css/layout.css">
         <link rel="stylesheet" type="text/css" href="./assets/css/sidebar.css">
         <link rel="stylesheet" type="text/css" href="./assets/css/editor.css">
         <link rel="stylesheet" type="text/css" href="./assets/css/hover.min.css">
         <link rel="stylesheet" type="text/css" href="./assets/css/font-awesome.min.css">
+
         <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,500,300&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
     </head>
     <body ng-controller="MainController">
+
+        <!-- Growl Notification -->
+        <div growl></div>
 
         <!-- Views  -->
         <div class="sidebar" ng-include="'./assets/partials/sidebar.html'"></div>
@@ -40,6 +45,7 @@
         <script src="./assets/lib/fabricjs/fabricConstants.js"></script>
         <script src="./assets/lib/fabricjs/fabricCanvas.js"></script>
         <script src="./assets/lib/fabricjs/fabricWindow.js"></script>
+        <script src="./assets/lib/angular-growl.min.js"></script>
 
         <!-- Fonts -->
         <link rel="stylesheet" href="./assets/fonts/AndaleSans-Regular/AndaleSans-Regular.css" type="text/css" media="screen">
