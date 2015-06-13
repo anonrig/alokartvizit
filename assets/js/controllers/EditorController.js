@@ -117,25 +117,26 @@ angular.module('aloApp').controller('EditorController', function($scope, $rootSc
         if (!$scope.objectSelected)
             return;
 
-        $scope.setObjectProperties({
-            options: {
-                object: {
-                    top: e['detail']['top'],
-                    left: e['detail']['left'],
-                    currentHeight: e['detail']['currentHeight'],
-                    fontFamily: e['detail']['fontFamily'],
-                    fontSize: e['detail']['fontSize'],
-                    fontWeight: e['detail']['fontWeight'],
-                    fontStyle: e['detail']['fontStyle'],
-                    textAlign: e['detail']['textAlign'],
-                    color: e['detail']['fill']
-                },
-                canvas: {
-                    offsetTop: $scope.fabric.getCanvas()['_offset']['top'],
-                    offsetLeft: $scope.fabric.getCanvas()['_offset']['left']
+        if (e && e['detail'])
+            $scope.setObjectProperties({
+                options: {
+                    object: {
+                        top: e['detail']['top'],
+                        left: e['detail']['left'],
+                        currentHeight: e['detail']['currentHeight'],
+                        fontFamily: e['detail']['fontFamily'].toLowerCase(),
+                        fontSize: e['detail']['fontSize'],
+                        fontWeight: e['detail']['fontWeight'],
+                        fontStyle: e['detail']['fontStyle'],
+                        textAlign: e['detail']['textAlign'],
+                        color: e['detail']['fill']
+                    },
+                    canvas: {
+                        offsetTop: $scope.fabric.getCanvas()['_offset']['top'],
+                        offsetLeft: $scope.fabric.getCanvas()['_offset']['left']
+                    }
                 }
-            }
-        });
+            });
     };
 
     $scope.setObjectProperties = function(data) {
@@ -143,6 +144,7 @@ angular.module('aloApp').controller('EditorController', function($scope, $rootSc
             $scope.objectProperties = data['options']['object'];
             var canvasProperties = data['options']['canvas'];
 
+            console.log($scope.objectProperties['fontFamily'])
             $scope.propertyElStyles = {
                 'top': $scope.objectProperties['top'] + $scope.objectProperties['currentHeight'] + canvasProperties['offsetTop'] + 20 + 'px',
                 'left': $scope.objectProperties['left'] + 20 + 'px'
@@ -265,6 +267,48 @@ angular.module('aloApp').controller('EditorController', function($scope, $rootSc
     Keypress.onSave(function() {
         $scope.updatePage();
     });
+
+    $scope.editorFonts = {
+        'vinetabt-regular': 'VinetaBT-Regular',
+        'verdana': 'Verdana',
+        'venetian301bt-roman': 'Venetian301BT-Roman',
+        'venetian301bt-italic': 'Venetian301BT-Italic',
+        'venetian301bt-demi': 'Venetian301BT-Demi',
+        'venetian301bt-demiitalic': 'Venetian301BT-DemiItalic',
+        'times new roman': 'Times New Roman',
+        'soniccutthrubt-heavy': 'SonicCutThruBT-Heavy',
+        'proseantiqueplain-regular': 'ProseAntiquePlain-Regular',
+        'proseantiquebold-regular': 'ProseAntiqueBold-Regular',
+        'candara-regular': 'Candara-Regular',
+        'candara-italic': 'Candara-Italic',
+        'candara-bold': 'Candara-Bold',
+        'candara-boldItalic': 'Candara-BoldItalic',
+        'futurabt-medium': 'FuturaBT-Medium',
+        'freestylescript-regular': 'FreestyleScript-Regular',
+        'freehand521bt-regularc': 'Freehand521BT-RegularC',
+        'comicsansms-regular': 'ComicSansMS-Regular',
+        'comicsansms-bold': 'ComicSansMS-Bold',
+        'centurygothic-regular': 'CenturyGothic-Regular',
+        'centurygothic-italic': 'CenturyGothic-Italic',
+        'centurygothic-bold': 'CenturyGothic-Bold',
+        'centurygothic-bolditalic': 'CenturyGothic-BoldItalic',
+        'centurionoldplain-regular': 'CenturionOldPlain-Regular',
+        'centurionolditalic-regular': 'CenturionOldItalic-Regular',
+        'centurionoldbold-regular': 'CenturionOldBold-Regular',
+        'buxomd-regular': 'BuxomD-Regular',
+        'brodyd-regular': 'BrodyD-Regular',
+        'bip-regular': 'BIP-Regular',
+        'BahamasPlain-Regular': 'BahamasPlain-Regular',
+        'BahamasBold-Regular': 'BahamasBold-Regular',
+        'andalesans-regular': 'AndaleSans-Regular',
+        'andalesans-italic': 'AndaleSans-Italic',
+        'andalesans-bold': 'AndaleSans-Bold',
+        'andalesans-bolditalic': 'AndaleSans-BoldItalic',
+        'albany-regular': 'Albany-Regular',
+        'albany-italic': 'Albany-Italic',
+        'albany-bold': 'Albany-Bold',
+        'albany-bolditalic': 'Albany-BoldItalic'
+    };
 
     $scope.fonts = {
         'Vineta BT': {

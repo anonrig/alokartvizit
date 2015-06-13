@@ -31,7 +31,7 @@
   </div>
 
   <div class="objectProperties" ng-if="objectSelected" ng-style="propertyElStyles">
-    <select class="fontFamilySelect" ng-model="objectProperties.font" ng-options="key as value.regular for (key , value) in fonts" ng-change="fabric.setFontFamily(objectProperties.font)"></select>
+    <select class="fontFamilySelect" ng-model="objectProperties.fontFamily" ng-options="key as value for (key , value) in editorFonts" ng-change="fabric.setFontFamily(objectProperties.fontFamily)"></select>
 
     <input ng-model="objectProperties.fontSize" type="number" max="100" min="10" ng-change="fabric.setFontSize(objectProperties.fontSize)"/>
 
