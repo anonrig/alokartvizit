@@ -7,7 +7,8 @@ var aloApp = angular.module('aloApp', [
     'common.fabric.constants',
     'infinite-scroll',
     'ngFileUpload',
-    'angular-growl'
+    'angular-growl',
+    'colorpicker.module'
 ]);
 
 
