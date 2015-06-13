@@ -8,7 +8,8 @@ var aloApp = angular.module('aloApp', [
     'infinite-scroll',
     'ngFileUpload',
     'angular-growl',
-    'colorpicker.module'
+    'colorpicker.module',
+    'ngContextMenu'
 ]);
 
 
