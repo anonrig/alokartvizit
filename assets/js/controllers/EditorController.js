@@ -144,7 +144,7 @@ angular.module('aloApp').controller('EditorController', function($scope, $rootSc
             $scope.objectProperties = data['options']['object'];
             var canvasProperties = data['options']['canvas'];
 
-            console.log($scope.objectProperties['fontFamily'])
+            $scope.setObjectFont();
             $scope.propertyElStyles = {
                 'top': $scope.objectProperties['top'] + $scope.objectProperties['currentHeight'] + canvasProperties['offsetTop'] + 20 + 'px',
                 'left': $scope.objectProperties['left'] + 20 + 'px'
@@ -152,12 +152,26 @@ angular.module('aloApp').controller('EditorController', function($scope, $rootSc
         }
     };
 
+    $scope.setObjectFont = function() {
+        for (var key in $scope.fonts) {
+            var currentFont = $scope.fonts[key];
+            if (currentFont['regular'] && currentFont['regular'].toLowerCase() == $scope.objectProperties['fontFamily'])
+                $scope.objectProperties['fontFamily'] = currentFont;
+            else if (currentFont['bold'] && currentFont['bold'].toLowerCase() == $scope.objectProperties['fontFamily'])
+                $scope.objectProperties['fontFamily'] = currentFont;
+            else if (currentFont['italic'] && currentFont['italic'].toLowerCase() == $scope.objectProperties['fontFamily'])
+                $scope.objectProperties['fontFamily'] = currentFont;
+            else if (currentFont['bold_italic'] && currentFont['bold_italic'].toLowerCase() == $scope.objectProperties['fontFamily'])
+                $scope.objectProperties['fontFamily'] = currentFont;
+        }
+    };
+
     $scope.lists = [{
-      name: 'Öne Getir',
-      id: 0
+        name: 'Öne Getir',
+        id: 0
     }, {
-      name: 'Arkaya Götür',
-      id: 1
+        name: 'Arkaya Götür',
+        id: 1
     }, {
         name: 'Dönmeyi Sıfırla',
         id: 2
@@ -167,7 +181,7 @@ angular.module('aloApp').controller('EditorController', function($scope, $rootSc
     }, {
         name: 'Sil',
         id: 4
-    }]
+    }];
 
     $scope.clickMenu = function (item) {
         var selectedObject = $scope.fabric.selectedObject;
@@ -216,7 +230,7 @@ angular.module('aloApp').controller('EditorController', function($scope, $rootSc
             default:
                 console.log('Nothing clicked');
                 break;
-        };
+        }
     };
 
     $scope.$on('canvas:created', $scope.init);
@@ -268,111 +282,87 @@ angular.module('aloApp').controller('EditorController', function($scope, $rootSc
         $scope.updatePage();
     });
 
-    $scope.editorFonts = {
-        'vinetabt-regular': 'VinetaBT-Regular',
-        'verdana': 'Verdana',
-        'venetian301bt-roman': 'Venetian301BT-Roman',
-        'venetian301bt-italic': 'Venetian301BT-Italic',
-        'venetian301bt-demi': 'Venetian301BT-Demi',
-        'venetian301bt-demiitalic': 'Venetian301BT-DemiItalic',
-        'times new roman': 'Times New Roman',
-        'soniccutthrubt-heavy': 'SonicCutThruBT-Heavy',
-        'proseantiqueplain-regular': 'ProseAntiquePlain-Regular',
-        'proseantiquebold-regular': 'ProseAntiqueBold-Regular',
-        'candara-regular': 'Candara-Regular',
-        'candara-italic': 'Candara-Italic',
-        'candara-bold': 'Candara-Bold',
-        'candara-boldItalic': 'Candara-BoldItalic',
-        'futurabt-medium': 'FuturaBT-Medium',
-        'freestylescript-regular': 'FreestyleScript-Regular',
-        'freehand521bt-regularc': 'Freehand521BT-RegularC',
-        'comicsansms-regular': 'ComicSansMS-Regular',
-        'comicsansms-bold': 'ComicSansMS-Bold',
-        'centurygothic-regular': 'CenturyGothic-Regular',
-        'centurygothic-italic': 'CenturyGothic-Italic',
-        'centurygothic-bold': 'CenturyGothic-Bold',
-        'centurygothic-bolditalic': 'CenturyGothic-BoldItalic',
-        'centurionoldplain-regular': 'CenturionOldPlain-Regular',
-        'centurionolditalic-regular': 'CenturionOldItalic-Regular',
-        'centurionoldbold-regular': 'CenturionOldBold-Regular',
-        'buxomd-regular': 'BuxomD-Regular',
-        'brodyd-regular': 'BrodyD-Regular',
-        'bip-regular': 'BIP-Regular',
-        'BahamasPlain-Regular': 'BahamasPlain-Regular',
-        'BahamasBold-Regular': 'BahamasBold-Regular',
-        'andalesans-regular': 'AndaleSans-Regular',
-        'andalesans-italic': 'AndaleSans-Italic',
-        'andalesans-bold': 'AndaleSans-Bold',
-        'andalesans-bolditalic': 'AndaleSans-BoldItalic',
-        'albany-regular': 'Albany-Regular',
-        'albany-italic': 'Albany-Italic',
-        'albany-bold': 'Albany-Bold',
-        'albany-bolditalic': 'Albany-BoldItalic'
+    $scope.updateFont = function() {
+        var isBold = $scope.fabric.isBold();
+        var isItalic = $scope.fabric.isItalic();
+
+        var fontFamily = $scope.objectProperties.fontFamily;
+        var selectedFont = fontFamily['regular'];
+
+        if (isBold && isItalic && fontFamily['bold_italic'])
+            selectedFont = fontFamily['bold_italic'];
+        else if (isBold && fontFamily['bold'])
+            selectedFont = fontFamily['bold'];
+        else if (isItalic && fontFamily['italic'])
+            selectedFont = fontFamily['italic'];
+
+        $scope.fabric.setFontFamily(selectedFont);
+        $scope.fabric.render();
     };
 
     $scope.fonts = {
-        'Vineta BT': {
-            regular: "VinetaBT-Regular"
-        },
-        'Verdana': {
-            regular: "Verdana"
-        },
-        'Venetian': {
-            regular: "Venetian301BT-Roman", italic: "Venetian301BT-Italic", bold: "Venetian301BT-Demi", bold_italic: "Venetian301BT-DemiItalic"
-        },
-        'Times New Roman': {
-            regular: "Times New Roman"
-        },
-        'Sonic Cut': {
-            regular: "SonicCutThruBT-Heavy"
-        },
-        'Prose Antique': {
-            regular: "ProseAntiquePlain-Regular", bold: "ProseAntiqueBold-Regular"
-        },
-        'Helvetica Condensed': {
-            regular: "Candara-Regular", italic: "Candara-Italic", bold: "Candara-Bold", bold_italic: "Candara-BoldItalic"
-        },
-        'Futura MD BT': {
-            regular: "FuturaBT-Medium"
-        },
-        'Freestyle Script': {
-            regular: "FreestyleScript-Regular"
-        },
-        'Freehand 521': {
-            regular: "Freehand521BT-RegularC"
-        },
-        'Comic Sans': {
-            regular: "ComicSansMS-Regular", bold: "ComicSansMS-Bold"
-        },
-        'Century Gothic': {
-            regular: "CenturyGothic-Regular", italic: "CenturyGothic-Italic", bold: "CenturyGothic-Bold", bold_italic: "CenturyGothic-BoldItalic"
-        },
-        'Century Expanded': {
-            regular: "CenturionOldPlain-Regular", italic: "CenturionOldItalic-Regular", bold: "CenturionOldBold-Regular"
-        },
-        'Candara': {
-            regular: "Candara-Regular", italic: "Candara-Italic", bold: "Candara-Bold", bold_italic: "Candara-BoldItalic"
-        },
-        'Buxom': {
-            regular: "BuxomD-Regular"
-        },
-        'BrodyD': {
-            regular: "BrodyD-Regular"
-        },
-        'Brody': {
-            regular: "Brody-Regular"
-        },
-        'Bip Funny': {
-            regular: "BIP-Regular"
-        },
-        'Bahamas': {
-            regular: "BahamasPlain-Regular", bold: "BahamasBold-Regular"
+        'Albany': {
+            regular: "Albany-Regular", italic: "Albany-Italic", bold: "Albany-Bold", bold_italic: "Albany-BoldItalic"
         },
         'Andale Sans': {
             regular: "AndaleSans-Regular", italic: "AndaleSans-Italic", bold: "AndaleSans-Bold", bold_italic: "AndaleSans-BoldItalic"
         },
-        'Albany': {
-            regular: "Albany-Regular", italic: "Albany-Italic", bold: "Albany-Bold", bold_italic: "Albany-BoldItalic"
+        'Bahamas': {
+            regular: "BahamasPlain-Regular", bold: "BahamasBold-Regular"
+        },
+        'Bip Funny': {
+            regular: "BIP-Regular"
+        },
+        'Brody': {
+            regular: "Brody-Regular"
+        },
+        'BrodyD': {
+            regular: "BrodyD-Regular"
+        },
+        'Buxom': {
+            regular: "BuxomD-Regular"
+        },
+        'Candara': {
+            regular: "Candara-Regular", italic: "Candara-Italic", bold: "Candara-Bold", bold_italic: "Candara-BoldItalic"
+        },
+        'Century Expanded': {
+            regular: "CenturionOldPlain-Regular", italic: "CenturionOldItalic-Regular", bold: "CenturionOldBold-Regular"
+        },
+        'Century Gothic': {
+            regular: "CenturyGothic-Regular", italic: "CenturyGothic-Italic", bold: "CenturyGothic-Bold", bold_italic: "CenturyGothic-BoldItalic"
+        },
+        'Comic Sans': {
+            regular: "ComicSansMS-Regular", bold: "ComicSansMS-Bold"
+        },
+        'Freehand 521': {
+            regular: "Freehand521BT-RegularC"
+        },
+        'Freestyle Script': {
+            regular: "FreestyleScript-Regular"
+        },
+        'Futura MD BT': {
+            regular: "FuturaBT-Medium"
+        },
+        'Helvetica Condensed': {
+            regular: "Candara-Regular", italic: "Candara-Italic", bold: "Candara-Bold", bold_italic: "Candara-BoldItalic"
+        },
+        'Prose Antique': {
+            regular: "ProseAntiquePlain-Regular", bold: "ProseAntiqueBold-Regular"
+        },
+        'Sonic Cut': {
+            regular: "SonicCutThruBT-Heavy"
+        },
+        'Times New Roman': {
+            regular: "Times New Roman"
+        },
+        'Venetian': {
+            regular: "Venetian301BT-Roman", italic: "Venetian301BT-Italic", bold: "Venetian301BT-Demi", bold_italic: "Venetian301BT-DemiItalic"
+        },
+        'Verdana': {
+            regular: "Verdana"
+        },
+        'Vineta BT': {
+            regular: "VinetaBT-Regular"
         }
     }
 });

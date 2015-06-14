@@ -19,15 +19,15 @@
   </div>
 
   <div class="objectProperties" ng-if="objectSelected" ng-style="propertyElStyles">
-    <select class="fontFamilySelect" ng-model="objectProperties.fontFamily" ng-options="key as value for (key , value) in editorFonts" ng-change="fabric.setFontFamily(objectProperties.fontFamily)"></select>
+    <select class="fontFamilySelect" ng-model="objectProperties.fontFamily" ng-options="value as key for (key , value) in fonts" ng-change="updateFont()"></select>
 
     <input ng-model="objectProperties.fontSize" type="number" max="100" min="10" ng-change="fabric.setFontSize(objectProperties.fontSize)"/>
 
-    <button ng-class="{ active: fabric.isBold() }" ng-click="fabric.toggleBold()" class='btn btn-small'>
+    <button ng-class="{ active: fabric.isBold() }" ng-click="fabric.toggleBold(); updateFont()" class='btn btn-small'>
         <i class='fa fa-bold'></i>
     </button>
 
-    <button ng-class="{ active: fabric.isItalic() }" ng-click="fabric.toggleItalic()" class='btn btn-small'>
+    <button ng-class="{ active: fabric.isItalic() }" ng-click="fabric.toggleItalic(); updateFont()" class='btn btn-small'>
         <i class='fa fa-italic'></i>
     </button>
 
