@@ -65,22 +65,16 @@ angular.module('aloApp').controller('EditorController', function($scope, $rootSc
             });
 
             $scope.currentTemplate['design']['page']['layout']['group'].forEach(function(text) {
-                var encodedText = text['text']['_value'],
-                    encodedText = encodedText.replace(/%0D/ig, "\n"),
+                var encodedText = text['text']['_value'].replace(/%0D/ig, "\n"),
                     decodedText = decodeURIComponent(encodedText).replace(new RegExp( '\\+', 'g' ), ' '),
-                    fontColor = text.text.font._fontcolor.toString(16),
+                    fontColor = text.text.font._fontcolor,
                     fontFamily = $scope.fonts[text.text.font._fontface].regular;
 
-                if (parseInt(fontColor, 16) < 0) {
-                    fontColor = 0xFFFFFFFF + fontColor;
-                    fontColor =  fontColor.toString(16);
-                    fontColor = "#" + fontColor.substring(2, 16);
-                    fontColor = fontColor.split('-')[0];
-                    console.log(fontColor);
-                } else {
-                    console.log(fontColor);
-                    fontColor = '#' + fontColor.substring(1, fontColor.length - 1);
-                }
+                if (fontColor < 0)
+                    fontColor = (0xFFFFFFFF + parseInt(fontColor) + 1).toString(16).slice(2);
+                else
+                    fontColor = Number(fontColor).toString(16);
+
 
                 if (parseInt(text.text.font._fontbold) && parseInt(text.text.font._fontitalic))
                     fontFamily = $scope.fonts[text.text.font._fontface].bold_italic;
@@ -98,8 +92,8 @@ angular.module('aloApp').controller('EditorController', function($scope, $rootSc
                     fontStyle: (text.text.font._fontitalic == "1" ? "italic" : "normal"),
                     textDecoration: (text.text.font._fontul == "1" ? "underline" : "none"),
                     textAlign: text.text.font._fontalign,
-                    cursorColor: fontColor,
-                    fill: '#' + parseInt(fontColor.substring(1, fontColor.length - 1),16)
+                    cursorColor: '#' + fontColor,
+                    fill:  '#' + fontColor
                 }).scale($scope.fabric.canvasScale);
 
                 $scope.fabric.getCanvas().add(addedText);
@@ -260,7 +254,11 @@ angular.module('aloApp').controller('EditorController', function($scope, $rootSc
     $scope.$watch('fabric.canvasScale', $scope.updateCanvasView);
     $rootScope.$on('templateChange', $scope.updateCanvasView);
     $rootScope.$on('addTextToEditor', function(e, data) {
-        $scope.fabric.addText(null, data);
+        var addedText = new fabric.IText('Yeni Metin', {
+            fontSize: parseInt(data)
+        }).scale($scope.fabric.canvasScale);
+
+        $scope.fabric.getCanvas().add(addedText);
     });
 
     $rootScope.$on('addBackgroundToEditor', function(e, data) {
