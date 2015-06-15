@@ -55,6 +55,7 @@ angular.module('aloApp').controller('MainController', function($scope, $rootScop
     });
 
     $scope.progressPercentage = 0;
+
     $scope.upload = function (files) {
         var url = 'http://alokartvizit.com/designer/fabrics/upload_form/upload.php?imageType=';
 
@@ -66,17 +67,18 @@ angular.module('aloApp').controller('MainController', function($scope, $rootScop
                 Upload.upload({
                     url: url,
                     fields: {},
-                    upl: file
+                    file: file
                 }).progress(function (evt) {
                     $scope.progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-                    console.log('progress: ' + $scope.progressPercentage + '% ' + evt.config.upl.name);
+                    console.log('progress: ' + $scope.progressPercentage + '% ' + evt.config.file.name);
                 }).success(function (data, status, headers, config) {
-                    if (data.status === 'error')
+                    if (data.err != 'There is no error, the file uploaded with success')
                         growl.addErrorMessage("Resmi yüklerken bir sorun oluştu.");
                     else
                         growl.addSuccessMessage("Resim başarıyla yüklendi.");
 
-                    console.log('file ' + config.upl.name + 'uploaded. Response: ' + data);
+                    console.log('file ' + config.file.name + 'uploaded. Response: ' + data);
+                    
                     if ($scope.activeView == 'background')
                         $scope.uploadedBgImages.push(data);
                     else
