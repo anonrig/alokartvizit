@@ -121,7 +121,7 @@ angular.module('aloApp').controller('EditorController', function($scope, $rootSc
         if (!$scope.objectSelected)
             return;
 
-        if (e && e['detail'])
+        if (e && e['detail'] && e['detail']['text'])
             $scope.setObjectProperties({
                 options: {
                     object: {
@@ -141,6 +141,8 @@ angular.module('aloApp').controller('EditorController', function($scope, $rootSc
                     }
                 }
             });
+        else
+            $scope.objectSelected = false;
     };
 
     $scope.setObjectProperties = function(data) {
