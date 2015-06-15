@@ -50,6 +50,11 @@ angular.module('aloApp').controller('EditorController', function($scope, $rootSc
         $scope.fabric.setCanvasSize(972, 602);
     };
 
+    $scope.setZoom = function() {
+        $scope.fabric.setZoom();
+        $scope.updateCanvasView($scope.currentTemplate);
+    };
+
     $scope.updateCanvasView = function(e, data) {
         if (data && data['design'])
             $scope.currentTemplate = data;
@@ -84,8 +89,8 @@ angular.module('aloApp').controller('EditorController', function($scope, $rootSc
                     fontFamily = $scope.fonts[text.text.font._fontface].italic;
 
                 var addedText = new fabric.IText(decodedText, {
-                    top: parseFloat(text['_topy'], 10),
-                    left: parseFloat(text['_leftx'], 10),
+                    top: parseFloat(text['_topy'] * $scope.fabric.canvasScale, 10),
+                    left: parseFloat(text['_leftx'] * $scope.fabric.canvasScale, 10),
                     fontFamily: fontFamily,
                     fontSize: parseInt(text.text.font._fontsize),
                     fontWeight: (text.text.font._fontbold == "1" ? "bold" : "normal"),
