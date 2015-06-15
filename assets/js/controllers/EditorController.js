@@ -106,6 +106,11 @@ angular.module('aloApp').controller('EditorController', function($scope, $rootSc
     $scope.objectProperties = {};
     $scope.propertyElStyles = {};
 
+    $scope.menuShown = function() {
+        $scope.toggleObjectProperties(false);
+        $scope.$digest();
+    };
+
     $scope.toggleObjectProperties = function(isSelected, e) {
         $scope.objectSelected = isSelected;
         if (!$scope.objectSelected)
