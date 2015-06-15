@@ -72,17 +72,13 @@ angular.module('aloApp').controller('MainController', function($scope, $rootScop
                     $scope.progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
                     console.log('progress: ' + $scope.progressPercentage + '% ' + evt.config.file.name);
                 }).success(function (data, status, headers, config) {
-                    if (data.err != 'There is no error, the file uploaded with success')
-                        growl.addErrorMessage("Resmi yüklerken bir sorun oluştu.");
-                    else
-                        growl.addSuccessMessage("Resim başarıyla yüklendi.");
+                    growl.addSuccessMessage("Resim başarıyla yüklendi.");
 
-                    console.log('file ' + config.file.name + 'uploaded. Response: ' + data);
-                    
+                    data['name'] = 'http://www.alokartvizit.com/designer/fabrics/' + data['name'];
                     if ($scope.activeView == 'background')
-                        $scope.uploadedBgImages.push(data);
+                        $scope.uploadedBgImages.push(file);
                     else
-                        $scope.uploadedImages.push(data);
+                        $scope.uploadedImages.push(file);
 
                     console.log($scope.uploadedBgImages)
                     console.log($scope.uploadedImages)

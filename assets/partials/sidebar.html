@@ -46,7 +46,7 @@
                 <div class="dropContainer">
                     <div ngf-drop ng-model="files" class="dropBox"
                          ngf-drag-over-class="dragover" ngf-multiple="true" ngf-allow-dir="true"
-                         ngf-accept="'image/*,application/pdf'">
+                         ngf-accept="'image/*'">
                         BURAYA SÜRÜKLEYİN
                     </div>
 
@@ -55,7 +55,7 @@
                     <div ngf-no-file-drop> Sürükle Bırak Desteklenmiyor. </div>
 
                 </div>
-                <img ng-repeat="file in uploadedBgImages" ngf-src="file" ngf-accept="'image/*'" class="loadedImage" ng-click="addBackgroundToEditor(file)"> <!-- Todo: Use after upload backend done -->
+                <img ng-repeat="file in uploadedImages" ngf-src="file" ngf-accept="'image/*'" class="loadedImage" ng-click="addImageToEditor(file)">
             </div>
         </div>
     </div>
