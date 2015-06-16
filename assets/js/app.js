@@ -9,7 +9,8 @@ var aloApp = angular.module('aloApp', [
     'ngFileUpload',
     'angular-growl',
     'colorpicker.module',
-    'ngContextMenu'
+    'ngContextMenu',
+    'Alertify'
 ]);
 
 

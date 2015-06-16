@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('aloApp').controller('EditorController', function($scope, $rootScope, $http, Fabric, FabricConstants, Keypress) {
+angular.module('aloApp').controller('EditorController', function($scope, $rootScope, $http, Fabric, FabricConstants, Keypress, Alertify) {
     $scope.fabric = {};
     $scope.FabricConstants = FabricConstants;
 
@@ -55,10 +55,24 @@ angular.module('aloApp').controller('EditorController', function($scope, $rootSc
         $scope.updateCanvasView($scope.currentTemplate);
     };
 
+    $scope.canvasChanged = false;
     $scope.updateCanvasView = function(e, data) {
+        if ($scope.canvasChanged) {
+            Alertify.confirm('Sahnedeki mevcut tasarımdaki değişiklikleri kaybedeceksiniz. Seçtiğiniz yeni şablonun yine de uygulanmasını istiyor musunuz?')
+                .then(function () {
+                    $scope.setCanvasView(data);
+                }, function () {
+
+                });
+        } else
+            $scope.setCanvasView(data);
+    };
+
+    $scope.setCanvasView = function(data) {
         if (data && data['design'])
             $scope.currentTemplate = data;
 
+        $scope.canvasChanged = false;
         if ($scope.fabric.canvasScale && $scope.currentTemplate) {
             $scope.fabric.getCanvas().clear();
 
@@ -106,7 +120,6 @@ angular.module('aloApp').controller('EditorController', function($scope, $rootSc
         }
     };
 
-
     $scope.objectSelected = false;
     $scope.objectProperties = {};
     $scope.propertyElStyles = {};
@@ -143,6 +156,8 @@ angular.module('aloApp').controller('EditorController', function($scope, $rootSc
             });
         else
             $scope.objectSelected = false;
+
+        $scope.canvasChanged = true;
     };
 
     $scope.setObjectProperties = function(data) {
