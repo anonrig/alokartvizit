@@ -63,12 +63,18 @@ angular.module('aloApp').controller('MainController', function($scope, $rootScop
 
         if (files && files.length) {
             for (var i = 0; i < files.length; i++) {
-                var file = files[i];
+                var file = files[i],
+                    imageUploadStarted = false;
                 Upload.upload({
                     url: url,
                     fields: {},
                     file: file
                 }).progress(function (evt) {
+                    if (!imageUploadStarted) {
+                        growl.addSuccessMessage("Resim yükleniyor.");
+                        imageUploadStarted = true;
+                    }
+
                     $scope.progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
                     console.log('progress: ' + $scope.progressPercentage + '% ' + evt.config.file.name);
                 }).success(function (data, status, headers, config) {
