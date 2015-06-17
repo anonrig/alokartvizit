@@ -25,7 +25,7 @@
     float: left;
     width: 360px;
     height: 100%;
-    padding: 20px 30px;
+    padding: 20px 0px;
     background-color: #3f4652;
     overflow-y: auto;
 }
@@ -59,6 +59,8 @@
     margin-bottom: 20px;
     display: inline-block;
     float: left;
+    margin-left: 15px;
+    width: 150px;
 }
 
 .templateItem > img {
