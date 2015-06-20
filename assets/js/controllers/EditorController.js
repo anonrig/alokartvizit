@@ -48,6 +48,15 @@ angular.module('aloApp').controller('EditorController', function($scope, $rootSc
         });
 
         $scope.fabric.setCanvasSize(972, 602);
+
+        var canvasWidth = $scope.fabric.canvasOriginalWidth;
+        var containerWidth = $('.editor').width() - 60;
+
+        if (canvasWidth > containerWidth) {
+            var percent = containerWidth * 100 / canvasWidth;
+            $scope.fabric.canvasScale = parseInt(percent) / 100;
+            $scope.fabric.setZoom();
+        }
     };
 
     $scope.setZoom = function() {
