@@ -1,14 +1,11 @@
-angular.module('common.fabric.canvas', [
-	'common.fabric.window'
-])
-
-.service('FabricCanvas', ['FabricWindow', '$rootScope', function(FabricWindow, $rootScope) {
-
+angular.module('common.fabric.canvas', ['common.fabric.window']).service('FabricCanvas', ['FabricWindow', '$rootScope', function(FabricWindow, $rootScope) {
 	var self = {
 		canvasId: null,
 		element: null,
 		canvas: null
 	};
+
+    self.canvasList = {};
 
 	function createId() {
 		return Math.floor(Math.random() * 10000);
@@ -25,8 +22,14 @@ angular.module('common.fabric.canvas', [
 		self.canvas = new FabricWindow.Canvas(self.canvasId);
 		$rootScope.$broadcast('canvas:created');
 
+        self.canvasList[self.canvasId] = self.canvas;
+
 		return self.canvas;
 	};
+
+	self.setActiveCanvas = function(canvasId) {
+        self.canvas = self.canvasList[canvasId];
+    };
 
 	self.getCanvas = function() {
 		return self.canvas;

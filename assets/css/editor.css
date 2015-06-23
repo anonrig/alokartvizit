@@ -13,6 +13,7 @@
   overflow-x: scroll;
   overflow-y: hidden;
   width: auto;
+  padding-bottom: 40px;
 }
 .image-builder-container .image-builder .image-cover {
   left: 0;
@@ -159,4 +160,31 @@
 
 .objectProperties button.active {
     background-color: rgb(128, 128, 128);
+}
+
+canvas {
+    margin-bottom: 20px;
+}
+
+.addNewPage {
+    color: #fff;
+    cursor: pointer;
+    display: inline-block;
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 18px;
+    padding: 7px 20px 9px;
+    text-align: center;
+    text-decoration: none;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.4);
+    transition: all 0.1s linear 0s;
+    background: linear-gradient(to bottom, #ffc000 0%, #ffb400 100%) repeat scroll 0 0 rgba(0, 0, 0, 0);
+    border: 1px solid #ffb400;
+    border-radius: 20px;
+    box-shadow: 1px 1px 0 rgba(255, 255, 255, 0.3) inset;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    width: 400px;
+    margin: 0 auto 10px;
 }

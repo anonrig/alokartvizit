@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('aloApp').controller('EditorController', function($scope, $rootScope, $http, Fabric, FabricConstants, Keypress, Alertify) {
+angular.module('aloApp').controller('EditorController', function($scope, $rootScope, $http, $compile, Fabric, FabricConstants, FabricCanvas, Keypress, Alertify) {
     $scope.fabric = {};
     $scope.FabricConstants = FabricConstants;
 
@@ -57,6 +57,13 @@ angular.module('aloApp').controller('EditorController', function($scope, $rootSc
             $scope.fabric.canvasScale = parseInt(percent) / 100;
             $scope.fabric.setZoom();
         }
+    };
+
+    $scope.addNewPage = function() {
+        var el = $('.image-builder');
+
+        el.append('<div class="fabric-container osx" contextmenu menu-list="lists" click-menu="clickMenu(item)" menu-shown="menuShown()" > <canvas id="canvas1" fabric="fabric"></canvas> </div>');
+        $compile($('#canvas1'))($scope);
     };
 
     $scope.setZoom = function() {
@@ -175,7 +182,8 @@ angular.module('aloApp').controller('EditorController', function($scope, $rootSc
         else
             $scope.objectSelected = false;
 
-        $scope.canvasChanged = true;
+        if ($scope.objectSelected)
+            $scope.canvasChanged = true;
     };
 
     $scope.setObjectProperties = function(data) {

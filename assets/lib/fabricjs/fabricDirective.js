@@ -14,7 +14,8 @@ angular.module('common.fabric.directive', [
 
 			// Continue rendering the canvas until the user clicks
 			// to avoid the "calcOffset" bug upon load.
-			$('body').on('click', 'canvas', function() {
+			$('body').on('click', 'canvas', function(e) {
+                FabricCanvas.setActiveCanvas(e.currentTarget.offsetParent.firstChild.id);
 				if ($scope.fabric.setUserHasClickedCanvas) {
 					$scope.fabric.setUserHasClickedCanvas(true);
 				}
