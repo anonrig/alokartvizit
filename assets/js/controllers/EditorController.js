@@ -99,15 +99,6 @@ angular.module('aloApp').controller('EditorController', function($scope, $rootSc
     };
 
     $scope.setCanvasView = function(data) {
-        if( window.devicePixelRatio !== 1 ){
-            var c = $scope.fabric.getCanvas().getElement(); // canvas = fabric.Canvas
-            var w = c.width, h = c.height;
-            c.setAttribute('width', w*window.devicePixelRatio);
-            c.setAttribute('height', h*window.devicePixelRatio);
-
-            c.getContext('2d').scale(window.devicePixelRatio, window.devicePixelRatio);
-        }
-
         if (data && data['design'])
             $scope.currentTemplate = data;
 
