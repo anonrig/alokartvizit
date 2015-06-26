@@ -50,7 +50,7 @@ angular.module('aloApp').controller('EditorController', function($scope, $rootSc
             json: {}
         });
 
-        $scope.fabric.setCanvasSize(972, 602);
+        $scope.fabric.setCanvasSize(992, 602);
 
         var canvasWidth = $scope.fabric.canvasOriginalWidth;
         var containerWidth = $('.editor').width() - 60;
