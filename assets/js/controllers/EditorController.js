@@ -1,9 +1,12 @@
 'use strict';
 
-angular.module('aloApp').controller('EditorController', function($scope, $rootScope, $http, $compile, Fabric, FabricConstants, FabricCanvas, Keypress, Alertify) {
+angular.module('aloApp').controller('EditorController', function($scope, $rootScope, $http, $compile, $location, Fabric, FabricConstants, FabricCanvas, Keypress, Alertify) {
     $scope.fabric = {};
     $scope.FabricConstants = FabricConstants;
 
+    $scope.editorMode = $location.search()['editor_mode'] || 1;
+    $scope.uniqueId = $location.search()['unique_id'];
+    
     //
     // Creating Canvas Objects
     // ================================================================
@@ -56,6 +59,17 @@ angular.module('aloApp').controller('EditorController', function($scope, $rootSc
             var percent = containerWidth * 100 / canvasWidth;
             $scope.fabric.canvasScale = parseInt(percent) / 100;
             $scope.fabric.setZoom();
+        }
+
+        if ($scope.uniqueId.length) {
+            $http.post('http://alokartvizit.com/designer/fabrics/ajax.php', {
+                request: 2,
+                design_id: $scope.uniqueId
+            }).success(function(response) {
+                if (response)
+                    $scope.setCanvasView(response);
+            });
+
         }
     };
 
