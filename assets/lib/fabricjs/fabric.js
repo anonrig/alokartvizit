@@ -855,6 +855,11 @@ angular.module('common.fabric', [
 					self.selectActiveObject();
 					self.setDirty(true);
 
+					if (self.selectedObject['text']) {
+                        self.selectedObject.lockScalingX = true;
+                        self.selectedObject.lockScalingY = true;
+                    }
+
                     var event = new CustomEvent('objectSelected', { 'detail': self.selectedObject });
                     document.dispatchEvent(event);
 				});
