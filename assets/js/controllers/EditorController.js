@@ -61,7 +61,7 @@ angular.module('aloApp').controller('EditorController', function($scope, $rootSc
             $scope.fabric.setZoom();
         }
 
-        if ($scope.uniqueId.length) {
+        if ($scope.uniqueId && $scope.uniqueId.length) {
             $http.post('http://alokartvizit.com/designer/fabrics/ajax.php', {
                 request: 2,
                 design_id: $scope.uniqueId
