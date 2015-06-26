@@ -37,7 +37,7 @@
 
                 </div>
 
-                <img ng-repeat="file in uploadedBgImages" ngf-src="file" ngf-accept="'image/*'" class="loadedImage" ng-click="addBackgroundToEditor(file)"> <!-- Todo: Use after upload backend done -->
+                <img ng-repeat="file in uploadedBgImages" ng-src="{{ file.thumbnail }}" ngf-accept="'image/*'" class="loadedImage" ng-click="addBackgroundToEditor(file)"> <!-- Todo: Use after upload backend done -->
             </div>
         </div>
         <div ng-switch-when="upload">
@@ -55,7 +55,7 @@
                     <div ngf-no-file-drop> Sürükle Bırak Desteklenmiyor. </div>
 
                 </div>
-                <img ng-repeat="file in uploadedImages" ngf-src="file" ngf-accept="'image/*'" class="loadedImage" ng-click="addImageToEditor(file)">
+                <img ng-repeat="file in uploadedImages" ng-src="{{ file.thumbnail }}" ngf-accept="'image/*'" class="loadedImage" ng-click="addImageToEditor(file)">
             </div>
         </div>
     </div>

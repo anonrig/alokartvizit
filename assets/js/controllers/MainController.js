@@ -81,13 +81,11 @@ angular.module('aloApp').controller('MainController', function($scope, $rootScop
                     growl.addSuccessMessage("Resim başarıyla yüklendi.");
 
                     data['name'] = 'http://www.alokartvizit.com/designer/fabrics/' + data['name'];
+                    file['thumbnail'] = 'http://www.alokartvizit.com/designer/fabrics/' + data['thumb_name'];
                     if ($scope.activeView == 'background')
                         $scope.uploadedBgImages.push(file);
                     else
                         $scope.uploadedImages.push(file);
-
-                    console.log($scope.uploadedBgImages)
-                    console.log($scope.uploadedImages)
                 });
             }
         }

@@ -188,3 +188,11 @@ canvas {
     width: 400px;
     margin: 0 auto 10px;
 }
+
+.loadedImage {
+  width: 150px;
+  display: inline-block;
+  float: left;
+  margin-left: 20px;
+  margin-top: 10px;
+}
