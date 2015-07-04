@@ -159,12 +159,117 @@ angular.module('aloApp').controller('EditorController', function($scope, $rootSc
         $scope.$digest();
     };
 
+
+    $scope.el = null;
+    $scope.object = null, $scope.lastActive = null, $scope.object1 = null, $scope.object2 = null;
+    $scope.cntObj = 0;
+    $scope.selection_object_left = 0;
+    $scope.selection_object_top = 0;
+
+    $scope.selectedCropObject = {};
+    $scope.startClip = false;
+    $scope.cropType  = '';
+
+    $scope.clipObject = function(type) {
+        $scope.startClip = true;
+        $scope.cropType = type;
+        var canvas = $scope.fabric.getCanvas();
+
+        canvas.remove($scope.el);
+        if (canvas.getActiveObject()) {
+            $scope.selectedCropObject = canvas.getActiveObject();
+
+            if ($scope.cropType == 'rect')
+                $scope.el = new fabric.Rect({
+                    fill: 'rgba(0,0,0,0.3)',
+                    originX: 'left',
+                    originY: 'top',
+                    stroke: '#ccc',
+                    strokeDashArray: [2, 2],
+                    opacity: 1,
+                    width: 1,
+                    height: 1,
+                    borderColor: '#36fd00',
+                    cornerColor: 'green',
+                    hasRotatingPoint: false
+                });
+            else if ($scope.cropType == 'circle') {
+                var width = $scope.selectedCropObject.get('width');
+                var height = $scope.selectedCropObject.get('height');
+                $scope.el = new fabric.Circle({
+                    width: width,
+                    height: height,
+                    left: 0,
+                    top: 0,
+                    angle: 0,
+                    startAngle: 0,
+                    endAngle: Math.PI,
+                    stroke: '#ccc',
+                    strokeDashArray: [2, 2],
+                    fill: 'rgba(0,0,0,0.3)'
+                });
+            }
+
+            $scope.el.left = canvas.getActiveObject().left;
+            $scope.selection_object_left = canvas.getActiveObject().left;
+            $scope.selection_object_top = canvas.getActiveObject().top;
+            $scope.el.top = canvas.getActiveObject().top;
+            $scope.el.width = canvas.getActiveObject().width * canvas.getActiveObject().scaleX;
+            $scope.el.height = canvas.getActiveObject().height * canvas.getActiveObject().scaleY;
+
+            canvas.add($scope.el);
+            canvas.setActiveObject($scope.el);
+        }
+    };
+
+
+    $scope.cropObject = function() {
+        var canvas = $scope.fabric.getCanvas();
+        var object = canvas.getActiveObject();
+
+        if ($scope.selectedCropObject) {
+            var eLeft = $scope.el.get('left');
+            var eTop = $scope.el.get('top');
+            var left = eLeft - $scope.selectedCropObject.left;
+            var top = eTop - $scope.selectedCropObject.top;
+
+            left *= 1;
+            top *= 1;
+
+            var eWidth = $scope.el.get('width');
+            var eHeight = $scope.el.get('height');
+            var eScaleX = $scope.el.get('scaleX');
+            var eScaleY = $scope.el.get('scaleY');
+            var radius = $scope.el.get('radius');
+            var width = eWidth * 1;
+            var height = eHeight * 1;
+
+            $scope.selectedCropObject.clipTo = function (ctx) {
+                if ($scope.cropType == 'rect')
+                    ctx.rect(-(eWidth / 2) + left, -(eHeight / 2) + top, parseInt(width * eScaleX), parseInt(eScaleY * height));
+                else if ($scope.cropType == 'circle')
+                    ctx.arc(left, top, radius, 0, Math.PI * 2, true);
+            };
+
+            $scope.selectedCropObject.selectable = true;
+
+            $scope.disabled = true;
+
+            canvas.remove($scope.el);
+            $scope.lastActive = $scope.selectedCropObject;
+            canvas.renderAll();
+            $scope.startClip = false;
+        }
+    };
+
+    $scope.propertyType = 'text';
     $scope.toggleObjectProperties = function(isSelected, e) {
         $scope.objectSelected = isSelected;
         if (!$scope.objectSelected)
             return;
 
-        if (e && e['detail'] && e['detail']['text'])
+        if (e && e['detail'] && e['detail']['text']) {
+            $scope.propertyType = 'text';
             $scope.setObjectProperties({
                 options: {
                     object: {
@@ -184,6 +289,23 @@ angular.module('aloApp').controller('EditorController', function($scope, $rootSc
                     }
                 }
             });
+        }
+        else if (e && e['detail'] && !e['detail']['text']) {
+            $scope.propertyType = 'image';
+            $scope.setObjectProperties({
+                options: {
+                    object: {
+                        top: e['detail']['top'],
+                        left: e['detail']['left'],
+                        currentHeight: e['detail']['currentHeight']
+                    },
+                    canvas: {
+                        offsetTop: $scope.fabric.getCanvas()['_offset']['top'],
+                        offsetLeft: $scope.fabric.getCanvas()['_offset']['left']
+                    }
+                }
+            });
+        }
         else
             $scope.objectSelected = false;
 
@@ -309,7 +431,6 @@ angular.module('aloApp').controller('EditorController', function($scope, $rootSc
         $scope.toggleObjectProperties(true, e);
     }, false);
 
-    $scope.$watch('fabric.canvasScale', $scope.updateCanvasView);
     $rootScope.$on('templateChange', $scope.updateCanvasView);
     $rootScope.$on('addTextToEditor', function(e, data) {
         var addedText = new fabric.IText('Yeni Metin', {

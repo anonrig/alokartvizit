@@ -18,36 +18,43 @@
     
   </div>
 
-  <div class="objectProperties" ng-if="objectSelected" ng-style="propertyElStyles">
-    <select class="fontFamilySelect" ng-model="objectProperties.fontFamily" ng-options="value as key for (key , value) in fonts" ng-change="updateFont()"></select>
+  <div class="objectProperties" ng-if="objectSelected" ng-style="propertyElStyles" ng-class="propertyType">
+      <div ng-if="propertyType == 'text'">
+          <select class="fontFamilySelect" ng-model="objectProperties.fontFamily" ng-options="value as key for (key , value) in fonts" ng-change="updateFont()"></select>
 
-    <input ng-model="objectProperties.fontSize" type="number" max="100" min="10" ng-change="fabric.setFontSize(objectProperties.fontSize)"/>
+          <input ng-model="objectProperties.fontSize" type="number" max="100" min="10" ng-change="fabric.setFontSize(objectProperties.fontSize)"/>
 
-    <button ng-class="{ active: fabric.isBold() }" ng-click="fabric.toggleBold(); updateFont()" class='btn btn-small'>
-        <i class='fa fa-bold'></i>
-    </button>
+          <button ng-class="{ active: fabric.isBold() }" ng-click="fabric.toggleBold(); updateFont()" class='btn btn-small'>
+              <i class='fa fa-bold'></i>
+          </button>
 
-    <button ng-class="{ active: fabric.isItalic() }" ng-click="fabric.toggleItalic(); updateFont()" class='btn btn-small'>
-        <i class='fa fa-italic'></i>
-    </button>
+          <button ng-class="{ active: fabric.isItalic() }" ng-click="fabric.toggleItalic(); updateFont()" class='btn btn-small'>
+              <i class='fa fa-italic'></i>
+          </button>
 
-    <button ng-class="{ active: fabric.isUnderline() }" ng-click="fabric.toggleUnderline()" class='btn btn-small'>
-        <i class='fa fa-underline'></i>
-    </button>
+          <button ng-class="{ active: fabric.isUnderline() }" ng-click="fabric.toggleUnderline()" class='btn btn-small'>
+              <i class='fa fa-underline'></i>
+          </button>
 
-    <button ng-class="{ active: fabric.getTextAlign() == 'left' }" ng-click="fabric.setTextAlign('left')" class='btn btn-small'>
-        <i class='fa fa-align-left'></i>
-    </button>
+          <button ng-class="{ active: fabric.getTextAlign() == 'left' }" ng-click="fabric.setTextAlign('left')" class='btn btn-small'>
+              <i class='fa fa-align-left'></i>
+          </button>
 
-    <button ng-class="{ active: fabric.getTextAlign() == 'center' }" ng-click="fabric.setTextAlign('center')" class='btn btn-small'>
-        <i class='fa fa-align-center'></i>
-    </button>
+          <button ng-class="{ active: fabric.getTextAlign() == 'center' }" ng-click="fabric.setTextAlign('center')" class='btn btn-small'>
+              <i class='fa fa-align-center'></i>
+          </button>
 
-    <button ng-class="{ active: fabric.getTextAlign() == 'right' }" ng-click="fabric.setTextAlign('right')" class='btn btn-small'>
-        <i class='fa fa-align-right'></i>
-    </button>
+          <button ng-class="{ active: fabric.getTextAlign() == 'right' }" ng-click="fabric.setTextAlign('right')" class='btn btn-small'>
+              <i class='fa fa-align-right'></i>
+          </button>
 
-    <input class="colorPicker" colorpicker type="text" ng-model="objectProperties.color" ng-change="fabric.setFill(objectProperties.color)" ng-style="{'background-color': objectProperties.color}"/>
+          <input class="colorPicker" colorpicker type="text" ng-model="objectProperties.color" ng-change="fabric.setFill(objectProperties.color)" ng-style="{'background-color': objectProperties.color}"/>
+      </div>
+      <div ng-if="propertyType == 'image'">
+          <a class="button" ng-click="clipObject('rect')"> <i class='fa fa-square-o'></i> </a>
+          <a class="button" ng-click="clipObject('circle')"> <i class='fa fa-circle-o'></i> </a>
+          <a class="button" ng-click="cropObject()" ng-if="startClip"> Kesmeyi Bitir </a>
+      </div>
   </div>
 
   <div class='col-xs-9'>

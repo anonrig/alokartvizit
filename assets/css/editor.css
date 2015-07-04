@@ -190,9 +190,19 @@ canvas {
 }
 
 .loadedImage {
-  width: 150px;
-  display: inline-block;
-  float: left;
-  margin-left: 20px;
-  margin-top: 10px;
+    width: 150px;
+    display: inline-block;
+    float: left;
+    margin-left: 20px;
+    margin-top: 10px;
+}
+
+.objectProperties.image {
+    width: auto;
+}
+
+.objectProperties.image a {
+    color: white;
+    padding: 0 5px;
+    border-right: 1px solid rgba(255,255,255,.3)
 }
