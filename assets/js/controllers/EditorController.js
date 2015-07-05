@@ -82,7 +82,7 @@ angular.module('aloApp').controller('EditorController', function($scope, $rootSc
 
     $scope.setZoom = function() {
         $scope.fabric.setZoom();
-        $scope.updateCanvasView($scope.currentTemplate);
+        $scope.setCanvasView($scope.currentTemplate);
     };
 
     $scope.canvasChanged = false;
@@ -113,7 +113,7 @@ angular.module('aloApp').controller('EditorController', function($scope, $rootSc
                 scaleY: $scope.fabric.canvasScale
             });
 
-            $scope.currentTemplate['design']['page']['layout']['group'].forEach(function(text) {
+            $scope.currentTemplate['design']['page']['layout']['group'].forEach(function(text, index) {
                 var encodedText = text['text']['_value'].replace(/%0D/ig, "\n"),
                     decodedText = decodeURIComponent(encodedText).replace(new RegExp( '\\+', 'g' ), ' '),
                     fontColor = text.text.font._fontcolor,
@@ -142,7 +142,9 @@ angular.module('aloApp').controller('EditorController', function($scope, $rootSc
                     textDecoration: (text.text.font._fontul == "1" ? "underline" : "none"),
                     textAlign: text.text.font._fontalign,
                     cursorColor: '#' + fontColor,
-                    fill:  '#' + fontColor
+                    fill:  '#' + fontColor,
+                    layoutIndex: index,
+                    originalData: text
                 }).scale($scope.fabric.canvasScale);
 
                 $scope.fabric.getCanvas().add(addedText);
@@ -425,9 +427,16 @@ angular.module('aloApp').controller('EditorController', function($scope, $rootSc
     document.addEventListener('objectMoving', function (e) {
         $('.objectProperties').css('opacity', '0');
         $('.colorpicker').removeClass('colorpicker-visible');
+        var index = e['detail']['layoutIndex'];
+        $scope.selectedObject = e['detail'];
+        $scope.currentTemplate['design']['page']['layout']['group'][index] = e['detail']['originalData'];
+        $scope.currentTemplate['design']['page']['layout']['group'][index]['_leftx'] = parseFloat(e['detail']['left'] / $scope.fabric.canvasScale, 10);
+        $scope.currentTemplate['design']['page']['layout']['group'][index]['_topy'] = parseFloat(e['detail']['top'] / $scope.fabric.canvasScale, 10);
+
     }, false);
 
     document.addEventListener('objectSelected', function (e) {
+        $scope.selectedObject = e['detail'];
         $scope.toggleObjectProperties(true, e);
     }, false);
 

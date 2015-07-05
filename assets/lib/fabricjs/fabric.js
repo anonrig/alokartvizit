@@ -900,7 +900,7 @@ angular.module('common.fabric', [
 			});
 
 			canvas.on('object:moving', function() {
-                var event = new CustomEvent('objectMoving');
+                var event = new CustomEvent('objectMoving', { 'detail': self.selectedObject });
                 document.dispatchEvent(event);
 			});
 		};
