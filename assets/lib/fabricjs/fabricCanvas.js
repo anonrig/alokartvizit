@@ -31,6 +31,18 @@ angular.module('common.fabric.canvas', ['common.fabric.window']).service('Fabric
         self.canvas = self.canvasList[canvasId];
     };
 
+	self.getCanvasList = function() {
+		return self.canvasList;
+	};
+
+	self.getCanvasById = function(canvasId) {
+		return self.canvasList[canvasId];
+	};
+
+	self.getCanvasImagesById = function(canvasId) {
+		return self.canvasList[canvasId].toDataURL({format: 'jpeg', quality: 1});
+	};
+
 	self.getCanvas = function() {
 		return self.canvas;
 	};

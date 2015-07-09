@@ -6,7 +6,8 @@ angular.module('aloApp').controller('EditorController', function($scope, $rootSc
 
     $scope.editorMode = $location.search()['editor_mode'] || 1;
     $scope.uniqueId = $location.search()['unique_id'];
-    
+    $scope.productId = $location.search()['no'];
+    $scope.isNew = $location.search()['isnew'] == '1';
     //
     // Creating Canvas Objects
     // ================================================================
@@ -96,6 +97,51 @@ angular.module('aloApp').controller('EditorController', function($scope, $rootSc
                 });
         } else
             $scope.setCanvasView(data);
+    };
+
+    $scope.createImages = function(){
+        var return_val = [];
+        $.each(FabricCanvas.getCanvasList(), function(id) {
+            return_val.push(FabricCanvas.getCanvasImagesById(id));
+        });
+        return return_val;
+    };
+
+    $scope.saveDesign = function() {
+        alertify.set({
+            buttonFocus: "none",
+            labels: {
+                ok: "Tamam",
+                cancel: "İptal"
+            }
+        });
+
+        alertify.confirm('Tasarımınız kaydedilecektir ve editörden çıkılacaktır.Devam etmek istiyor musunuz?', function (e) {
+            $("#alertify-cancel").blur();
+            $("#alertify-ok").blur();
+            if (e) {
+                $http.post('http://alokartvizit.com/designer/fabrics/ajax.php', JSON.stringify({
+                    request: null,
+                    is_new: $scope.isNew,
+                    str_xml: $scope.fabric.getJSON(),
+                    page_count: 0,
+                    product_id: $scope.productId,
+                    unique_id: $scope.uniqueId,
+                    operation: 'save',
+                    member_type: $scope.editorMode == '2' ? 'admin' : 'customer',
+                    images: $scope.createImages()
+                })).success(function(data) {
+                    console.log(data)
+                    if (typeof data.error == "undefined") {
+                        if(data.success == true)
+                            window.location = data['redirect_url'];
+                    } else
+                        console.log('Kaydetme Hatası')
+                });
+
+            }
+            return false;
+        });
     };
 
     $scope.setCanvasView = function(data) {
