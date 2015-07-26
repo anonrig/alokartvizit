@@ -366,10 +366,13 @@ angular.module('aloApp').controller('EditorController', function($scope, $rootSc
             $scope.objectProperties = data['options']['object'];
             var canvasProperties = data['options']['canvas'];
 
+            var margin = ($('.image-builder').width() - $('.fabric-container').width()) / 2;
+            margin = margin > 20 ? margin : 20;
+            
             $scope.setObjectFont();
             $scope.propertyElStyles = {
                 'top': $scope.objectProperties['top'] + $scope.objectProperties['currentHeight'] + canvasProperties['offsetTop'] + 20 + 'px',
-                'left': $scope.objectProperties['left'] + 20 + 'px'
+                'left': $scope.objectProperties['left'] + margin + 'px'
             };
         }
     };
