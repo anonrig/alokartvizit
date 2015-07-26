@@ -16,7 +16,10 @@ angular.module('aloApp').controller('EditorController', function($scope, $rootSc
     };
 
     $scope.addImage = function(image) {
-        $scope.fabric.addImage(image);
+        $scope.fabric.addImage(image, {
+            scaleX: $scope.fabric.canvasScale / 3,
+            scaleY: $scope.fabric.canvasScale / 3
+        });
     };
 
     $scope.addImageUpload = function(data) {

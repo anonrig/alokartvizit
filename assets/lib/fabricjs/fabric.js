@@ -217,10 +217,11 @@ angular.module('common.fabric', [
 		//
 		// Image
 		// ==============================================================
-		self.addImage = function(imageURL) {
+		self.addImage = function(imageURL, imageOptions) {
 			fabric.Image.fromURL(imageURL, function(object) {
 				object.id = self.createId();
 
+				self.imageOptions = imageOptions || self.imageOptions;
 				for (var p in self.imageOptions) {
 					object[p] = self.imageOptions[p];
 				}
