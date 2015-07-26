@@ -365,14 +365,24 @@ angular.module('aloApp').controller('EditorController', function($scope, $rootSc
         if (data['options']) {
             $scope.objectProperties = data['options']['object'];
             var canvasProperties = data['options']['canvas'];
+            var propertyWidgetWidth = $('.objectProperties').width();
 
             var margin = ($('.image-builder').width() - $('.fabric-container').width()) / 2;
             margin = margin > 20 ? margin : 20;
-            
+
+            var top = $scope.objectProperties['top'] + $scope.objectProperties['currentHeight'] + canvasProperties['offsetTop'] + 20;
+            var left = $scope.objectProperties['left'] + margin;
+
+            if (left > window.innerWidth - (propertyWidgetWidth * 2))
+                left = window.innerWidth - (propertyWidgetWidth * 2);
+
+            if (left < margin)
+                left = margin;
+
             $scope.setObjectFont();
             $scope.propertyElStyles = {
-                'top': $scope.objectProperties['top'] + $scope.objectProperties['currentHeight'] + canvasProperties['offsetTop'] + 20 + 'px',
-                'left': $scope.objectProperties['left'] + margin + 'px'
+                'top': top + 'px',
+                'left': left + 'px'
             };
         }
     };
