@@ -865,6 +865,11 @@ angular.module('common.fabric', [
 				});
 			});
 
+			canvas.on("object:rotating", function() {
+				var event = new CustomEvent('objectRotated', { 'detail': self.selectedObject });
+				document.dispatchEvent(event);
+			});
+
 			canvas.on('selection:created', function() {
 				self.stopContinuousRendering();
 			});

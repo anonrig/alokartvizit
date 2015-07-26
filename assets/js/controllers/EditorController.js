@@ -179,6 +179,7 @@ angular.module('aloApp').controller('EditorController', function($scope, $rootSc
                     fontFamily = $scope.fonts[text.text.font._fontface].italic;
 
                 var addedText = new fabric.IText(decodedText, {
+                    angle: text['angle'] || 0,
                     top: parseFloat(text['_topy'] * $scope.fabric.canvasScale, 10),
                     left: parseFloat(text['_leftx'] * $scope.fabric.canvasScale, 10),
                     fontFamily: fontFamily,
@@ -488,11 +489,21 @@ angular.module('aloApp').controller('EditorController', function($scope, $rootSc
         $('.colorpicker').removeClass('colorpicker-visible');
         var index = e['detail']['layoutIndex'];
         $scope.selectedObject = e['detail'];
-        $scope.currentTemplate['design']['page']['layout']['group'][index] = e['detail']['originalData'];
-        $scope.currentTemplate['design']['page']['layout']['group'][index]['_leftx'] = parseFloat(e['detail']['left'] / $scope.fabric.canvasScale, 10);
-        $scope.currentTemplate['design']['page']['layout']['group'][index]['_topy'] = parseFloat(e['detail']['top'] / $scope.fabric.canvasScale, 10);
+        if ($scope.currentTemplate['design']['page']['layout']['group'][index]) {
+            $scope.currentTemplate['design']['page']['layout']['group'][index] = e['detail']['originalData'];
+            $scope.currentTemplate['design']['page']['layout']['group'][index]['_leftx'] = parseFloat(e['detail']['left'] / $scope.fabric.canvasScale, 10);
+            $scope.currentTemplate['design']['page']['layout']['group'][index]['_topy'] = parseFloat(e['detail']['top'] / $scope.fabric.canvasScale, 10);
+        }
+
 
     }, false);
+
+    document.addEventListener('objectRotated', function (e) {
+        $scope.selectedObject = e['detail'];
+        var index = e['detail']['layoutIndex'];
+        $scope.currentTemplate['design']['page']['layout']['group'][index] = e['detail']['originalData'];
+        $scope.currentTemplate['design']['page']['layout']['group'][index]['angle'] = e['detail']['angle'];
+    });
 
     document.addEventListener('objectSelected', function (e) {
         $scope.selectedObject = e['detail'];
@@ -501,11 +512,33 @@ angular.module('aloApp').controller('EditorController', function($scope, $rootSc
 
     $rootScope.$on('templateChange', $scope.updateCanvasView);
     $rootScope.$on('addTextToEditor', function(e, data) {
+        var nextIndex = $scope.currentTemplate['design']['page']['layout']['group'].length;
+        var newText = {
+            _leftx: 0,
+            _topy: 0,
+            text: {
+                _value: 'Yeni Metin',
+                font: {
+                    _fontalign: 'left',
+                    _fontbold: '0',
+                    _fontcolor: '-14738921',
+                    _fontface: 'Times New Roman',
+                    _fontitalic: '0',
+                    _fontsize: parseInt(data),
+                    _fontul: '0'
+                }
+            },
+            layoutIndex: nextIndex
+        };
+
         var addedText = new fabric.IText('Yeni Metin', {
-            fontSize: parseInt(data)
+            fontSize: parseInt(data),
+            layoutIndex: nextIndex,
+            originalData: newText
         }).scale($scope.fabric.canvasScale);
 
         $scope.fabric.getCanvas().add(addedText);
+        $scope.currentTemplate['design']['page']['layout']['group'].push(newText);
     });
 
     $rootScope.$on('addBackgroundToEditor', function(e, data) {
